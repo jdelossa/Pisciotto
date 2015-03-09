@@ -1,0 +1,372 @@
+/*
+Theme Name: Winthrop Medical
+Author: Winthrop Web Team
+Description: The first base theme for Winthrop medical afffiliates.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+/********************* REUSEABLE CLASSES *********************/
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        -webkit-transform: translateY(5px);
+    }
+    40% {
+        -webkit-transform: translateY(-10px);
+    }
+    60% {
+        -webkit-transform: translateY(0px);
+    }
+}
+/********************* LESS VARIABLES *********************/
+@white: #ffffff;
+@silver: #eeeeee;
+@light-gray: #cccccc;
+@dark-gray: #575757;
+
+@blue: #41678C;
+@dark-blue: #1c4773;
+@green: lighten(#889425, 5%);
+
+/********************* HTML ELEMENTS *********************/
+html {
+  min-height: 100%;
+  position: relative;
+}
+body {
+  background-color: @silver;
+  overflow-x: hidden;
+  padding-top: 80px; 
+}
+body, #glendale-map, #mineola-map {
+  width: 100%;
+}
+h1,h2,h3,h4,h5,h6 {
+  letter-spacing: 0.025em;
+  font-weight: 400;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: @blue;
+}
+p,address,li {
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 400;
+  color: darken(@dark-blue, 10%);
+}
+section h2, section h3 {
+  text-align: center;
+  margin: 15px 0;
+}
+section p {
+  line-height: 1.75em;
+}
+a, a:hover {
+  font-family: 'Source Sans Pro', sans-serif;
+  color: @green;
+}
+a.title:hover {
+  text-decoration: none !important;
+}
+ul{
+  list-style: none;
+  padding-left: 0;
+}
+
+/********************* PAGE STYLES *********************/
+.wrap {
+  background-color: @white !important;
+  border: @light-gray solid 1px;
+}
+/* Removed BOOTSTRAP Padding! */
+.container {
+  padding-left: 0;
+  padding-right: 0;
+}
+.content {
+  padding: 10px 20px;
+}
+.row {
+  margin: 0;
+}
+.line-separator {
+  background-image: url(images/separator.png);
+}
+.separator {
+  display: block;
+  width: 100%;
+  height: 50px;
+  margin: 5px 0;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.header {
+  border-bottom: 2px solid @dark-blue;
+  margin: 10px auto;
+  width: 75px;
+}
+/********************* Header Contact *********************/
+.header-contact {
+  background-color: @dark-blue;
+  height: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1080;
+
+  li, a {
+    color: @white;
+    position: relative;
+    top: 2px;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+  }
+  a {
+    text-decoration: underline;
+  }
+
+}
+/********************* Navbar Fixed Top *********************/
+.navbar-fixed-top {
+  background-color: @blue;
+  top: 30px;
+  height: 50px;
+
+  .navbar-header {
+    position: relative;
+    bottom: 10px;
+    h3 {
+      color: @white;
+    }
+  }
+  .navbar {
+    position: relative;
+    top: 6px;
+    li {
+      display: inline-block;
+
+      a {
+        padding: 4px 10px;
+        color: @white;
+          &:active, &:focus, &:hover {
+            background-color: transparent !important;
+          }
+      }
+    }
+    .contact-button {
+      background-color: @green;
+      border-radius: 5px;
+    }
+  }
+}
+/********************* Jumbotron *********************/
+.jumbotron {
+  height: 300px; 
+  margin-bottom: 0;
+  background-color: darken(@silver, 10%);
+  border-radius: 0 !important;
+  width: 100%;
+  background: url('images/hero.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+}
+/********************* Tabs *********************/
+.nav-tabs {
+  margin-bottom: 20px;
+  .active {
+    li {
+      background-color: @white;
+    }
+    a {
+      color: @blue !important;
+      border-left: none !important;
+      border-right: none !important;
+    }
+  }
+  li{
+    background-color: @silver;
+
+    a {
+      color: @dark-gray;
+      font-size: 22px;
+      padding: 20px 15px !important;
+    }
+  }
+}
+/********************* About *********************/
+#about {
+  background-color: @white;
+}
+
+/********************* Tab *********************/
+.tab-content {
+  margin-bottom: 50px;
+  .margin-bottom {
+    margin-bottom: 40px;
+  }
+    .border-left {
+      border-left: solid 2px @dark-blue;
+    }
+}
+/********************* Physicians *********************/
+.single-header {
+  margin: 40px 0;
+}
+.doctor-card {
+  margin: 20px auto;
+  text-align: center;
+}
+.single {
+  b {
+    text-transform: uppercase;
+    font-size: 12px;
+    background-color: @silver;
+    color: @blue;
+    padding: 2px 5px;
+    width: 100%;
+    display: inline-block;
+  }
+  .img-container {
+    text-align: center;
+  } 
+  .btn {
+    width: 100%;
+  }
+}
+/********************* Contact Us *********************/
+#glendale-map, #mineola-map {
+  width: 100% !important;
+  height: 200px !important;
+}
+/********************* Footer *********************/
+.footer {
+  background-color: #1c4773;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  
+  .footer-logo {
+    position: relative;
+    right: 90px;
+
+    img {
+      transform: scale(0.6);
+      -ms-transform: scale(0.6);
+      -webkit-transform: scale(0.6);
+      -moz-transform: scale(0.6);
+      -o-transform: scale(0.6);
+    }
+  }
+  p {
+    color: @white;
+    font-size: 12px;
+    text-align: right;
+    position: relative;
+    top: 5px;
+  }
+}
+
+@media (max-width: 991px){
+  .border-left {
+    border-left: none !important;
+  }
+  .single {
+    .btn {
+      width: 50%;
+    }
+  }
+}
+@media(max-width: 767px){
+  body {
+    padding-top: 120px;
+    overflow-x: hidden; 
+  }
+  .single {
+    .wrap {
+      margin-bottom: 80px
+    }
+    .btn {
+      width: 40%;
+      font-size: 14px;
+    }
+  }
+  .wrap {
+    margin-bottom: 30px;
+  }
+  .nav-tabs.nav-justified > li {
+    float: left;
+    width: 50%;
+
+    a {
+      margin: 0;
+    }
+  }
+  .header-contact {
+    li, a {
+      padding: 0 5px;
+      font-size: 12px;
+    }
+  }
+  .navbar-fixed-top {
+    height: 90px;
+
+    .navbar-header {
+      text-align: center;
+      width: 100%;
+      margin: 0;
+    }
+    .navbar {
+      text-align: center;
+      width: 100%;
+      float: none;
+      padding-left: 0;
+      position: relative;
+      top: -15px;
+
+      a {
+        font-size: 14px;
+      }
+    }
+  }
+  .nav-tabs {
+    a {
+      font-size: 18px !important;
+    }
+  }
+  .footer {
+    p {
+      width: 100%;
+      text-align: center;
+    }
+    .footer-logo {
+      right: 0;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
