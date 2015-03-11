@@ -38,7 +38,7 @@
 	<![endif]-->	
 </head>
 
-<body data-spy="scroll" data-target=".navbar" data-offset=""<?php body_class(); ?>>
+<body data-spy="scroll" data-target=".navbar" data-offset="" <?php body_class(); ?>>
 			
 	<div class="header-contact">
 		<div class="container">
@@ -60,9 +60,8 @@
 
 				<div id="navbar">
 					<ul class="navbar nav navbar-right">
-				       	<li class="about"><a href="#about">About</a></li>
-				       	<li class="our-physicians"><a href="#our-physicians" class="tab-staff">Our Physicians</a></li>
-				        <li class="contact-button"><a href="#contact">Contact Us</a></li>
+				       	<li><a href="#about" class="about">About</a></li>
+				        <li><a href="#contact" class="contact-button">Contact Us</a></li>
 				    </ul>
 				</div>
 

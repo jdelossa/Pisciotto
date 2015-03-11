@@ -82,7 +82,7 @@ h6 {
   letter-spacing: 0.025em;
   font-weight: 400;
   font-family: 'Source Sans Pro', sans-serif;
-  color: #41678c;
+  color: #356391;
 }
 p,
 address,
@@ -93,18 +93,13 @@ li {
   font-weight: 400;
   color: #122e4a;
 }
-section h2,
-section h3 {
-  text-align: center;
-  margin: 15px 0;
-}
 section p {
   line-height: 1.75em;
 }
 a,
 a:hover {
   font-family: 'Source Sans Pro', sans-serif;
-  color: #9ba82a;
+  color: #669b0d;
 }
 a.title:hover {
   text-decoration: none !important;
@@ -142,8 +137,8 @@ ul {
 }
 .header {
   border-bottom: 2px solid #1c4773;
-  margin: 10px auto;
-  width: 75px;
+  margin: 10px 0px;
+  width: 160px;
 }
 /********************* Header Contact *********************/
 .header-contact {
@@ -160,7 +155,7 @@ ul {
   color: #ffffff;
   position: relative;
   top: 2px;
-  font-size: 14px;
+  font-size: 13px;
   letter-spacing: 0.03em;
 }
 .header-contact a {
@@ -168,9 +163,10 @@ ul {
 }
 /********************* Navbar Fixed Top *********************/
 .navbar-fixed-top {
-  background-color: #41678c;
+  background-color: #356391;
   top: 30px;
   height: 50px;
+  border-bottom: none;
 }
 .navbar-fixed-top .navbar-header {
   position: relative;
@@ -181,14 +177,16 @@ ul {
 }
 .navbar-fixed-top .navbar {
   position: relative;
-  top: 6px;
+  top: 7px;
 }
 .navbar-fixed-top .navbar li {
   display: inline-block;
+  letter-spacing: 0.02em;
 }
 .navbar-fixed-top .navbar li a {
   padding: 4px 10px;
   color: #ffffff;
+  text-shadow: #575757 1px 1px 1px;
 }
 .navbar-fixed-top .navbar li a:active,
 .navbar-fixed-top .navbar li a:focus,
@@ -196,8 +194,14 @@ ul {
   background-color: transparent !important;
 }
 .navbar-fixed-top .navbar .contact-button {
-  background-color: #9ba82a;
+  background-color: #669b0d;
   border-radius: 5px;
+}
+.navbar-fixed-top .navbar .contact-button:hover,
+.navbar-fixed-top .navbar .contact-button:active,
+.navbar-fixed-top .navbar .contact-button:focus {
+  background-color: #669b0d !important;
+  color: #ffffff !important;
 }
 /********************* Jumbotron *********************/
 .jumbotron {
@@ -205,7 +209,6 @@ ul {
   margin-bottom: 0;
   background-color: #d5d5d5;
   border-radius: 0 !important;
-  width: 100%;
   background: url('images/hero.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -217,9 +220,10 @@ ul {
 }
 .nav-tabs .active li {
   background-color: #ffffff;
+  border-bottom: none !important;
 }
 .nav-tabs .active a {
-  color: #41678c !important;
+  color: #356391 !important;
   border-left: none !important;
   border-right: none !important;
 }
@@ -228,7 +232,7 @@ ul {
 }
 .nav-tabs li a {
   color: #575757;
-  font-size: 22px;
+  font-size: 24px;
   padding: 20px 15px !important;
 }
 /********************* About *********************/
@@ -240,7 +244,7 @@ ul {
   margin-bottom: 50px;
 }
 .tab-content .margin-bottom {
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 .tab-content .border-left {
   border-left: solid 2px #1c4773;
@@ -253,26 +257,43 @@ ul {
   margin: 20px auto;
   text-align: center;
 }
+.img-thumbnail {
+  max-width: 70%;
+}
 .single b {
   text-transform: uppercase;
   font-size: 12px;
   background-color: #eeeeee;
-  color: #41678c;
+  color: #356391;
   padding: 2px 5px;
   width: 100%;
   display: inline-block;
 }
 .single .img-container {
   text-align: center;
+  max-width: 100%;
 }
 .single .btn {
-  width: 100%;
+  width: 70%;
+}
+.single h2 {
+  text-align: center;
+}
+.single .header {
+  margin: 10px auto;
 }
 /********************* Contact Us *********************/
 #glendale-map,
 #mineola-map {
   width: 100% !important;
   height: 200px !important;
+}
+.contact {
+  padding-left: 15px;
+  font-size: 16px;
+}
+.insurance {
+  margin: 20px 0;
 }
 /********************* Footer *********************/
 .footer {

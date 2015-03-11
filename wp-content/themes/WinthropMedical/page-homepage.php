@@ -7,19 +7,7 @@ Template Name: Homepage
 <?php get_header(); ?>
 
 <section id="about" class="container">
-
-	<div class="separator line-separator"></div>
-
-	<!-- <div class="row">
-		<div class="col-md-12">
-			<h2><?php $post = get_post(50); $content = apply_filters('the_title', $post->post_title); echo $content;?></h2>
-			<div class="header"></div>
-			<?php $post = get_post(50); $content = apply_filters('the_content', $post->post_content); echo $content;?>
-		</div>
-	</div> -->
-
 	<div class="jumbotron"></div>
-
 </section>
 
 
@@ -46,38 +34,30 @@ Template Name: Homepage
 	    <div role="tabpanel" class="tab-pane fade in active content" id="glendale">
 			
 			<div class="row">
-				<div class="margin-bottom col-md-10">
+				<div class="margin-bottom col-md-6">
 					<?php $post = get_post(2); $content = apply_filters('the_content', $post->post_content); echo $content;?>
 				</div>
-				<div class="border-left call-us border-left col-md-2">
-					<h3>Call Today</h3>
-					<h3 class="tel"><a href="tel:<?= get_option("qs_contact_phone"); ?>"><?= get_option("qs_contact_phone"); ?></a></h3>
-				</div>
-			</div>
-
-			<div class="row">
-				<div id="our-physicians" class="col-md-12">
-					<h2><?php $post = get_post(5); $content = apply_filters('the_title', $post->post_title); echo $content;?></h2>
-					<div class="header"></div>
-
+				<div class="col-md-6">
 					<?php get_template_part('doctor-images'); ?>
 				</div>
 			</div>
 
 			<div class="row">		
-				<div id="contact" class="col-md-12 text-center">
-					<h2><?php $post = get_post(9); $content = apply_filters('the_title', $post->post_title); echo $content;?></h2>
+				<div id="contact" class="col-md-12">
+					<h2>Contact Us<span class="contact">- <?php $post = get_post(2); $content = apply_filters('the_title', $post->post_title); echo $content;?></span></h2>
 					<div class="header"></div>
-					<!--<?php $post = get_post(9); $content = apply_filters('the_content', $post->post_content); echo $content;?>-->
-
-					<h4 class="contact"><?php $post = get_post(2); $content = apply_filters('the_title', $post->post_title); echo $content;?></h4>
-					<p>M, W, Th, F : 10am - 5pm</p>
-					<p>T: 10am - 6pm</p>
-					<p>Sat: 9am - 2pm</p>
+					<div class="insurance">
+						<?php $post = get_post(67); $content = apply_filters('the_content', $post->post_content); echo $content;?>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6 text-center">
+
+			<div class="row content">
+				<div class="col-md-4 text-center">
+					<?php $post = get_post(9); $content = apply_filters('the_content', $post->post_content); echo $content;?>
+				</div>
+				<div class="col-md-4 text-center">
+					<h4>Office Location</h4>
 					<p>
 						<?= get_option('qs_contact_street'); ?>
 					</p>
@@ -87,53 +67,48 @@ Template Name: Homepage
 						<?= get_option('qs_contact_zip'); ?>
 					</p>
 				</div>
-				<div class="col-md-6 text-center">
+				<div class="col-md-4 text-center">
+					<h4>Office Numbers</h4>
 					<p>Tel: <a href="tel:<?= get_option("qs_contact_phone"); ?>"><?= get_option("qs_contact_phone"); ?></a></p>
 					<p>Fax: <?= get_option("qs_contact_fax"); ?></p>
 				</div>
 			</div>
+
 			<div class="map">
 	 			<div id="glendale-map">
 					<img src="#" alt="Static fallback image"/>
 				</div>
 	 		</div>	
 		</div>
-		<!--  END PANEL #glendale -->
+	<!--  END PANEL #glendale -->
 
 	    <div role="tabpanel" class="tab-pane fade content" id="mineola">
 
 			<div class="row">
-				<div class="margin-bottom col-md-10">
+				<div class="margin-bottom col-md-6">
 					<?php $post = get_post(13); $content = apply_filters('the_content', $post->post_content); echo $content;?>
 				</div>
-				<div class="border-left call-us border-left col-md-2">
-					<h3>Call Today</h3>
-					<h3 class="tel"><a href="tel:<?= get_option("qs_contact_phone2"); ?>"><?= get_option("qs_contact_phone2"); ?></a></h3>
-				</div>
-			</div>
-
-			<div class="row">
-				<div id="our-physicians" class="col-md-12">
-					<h2><?php $post = get_post(5); $content = apply_filters('the_title', $post->post_title); echo $content;?></h2>
-					<div class="header"></div>
+				<div class="col-md-6">
 					<?php get_template_part('doctor-images'); ?>
 				</div>
 			</div>
 
 			<div class="row">		
-				<div id="contact-m" class="col-md-12 text-center">
-					<h2><?php $post = get_post(11); $content = apply_filters('the_title', $post->post_title); echo $content;?></h2>
+				<div id="contact-m" class="col-md-12">
+					<h2>Contact Us<span class="contact">- <?php $post = get_post(13); $content = apply_filters('the_title', $post->post_title); echo $content;?></span></h2>
 					<div class="header"></div>
-					<!--<?php $post = get_post(9); $content = apply_filters('the_content', $post->post_content); echo $content;?>-->
-
-					<h4 class="contact"><?php $post = get_post(2); $content = apply_filters('the_title', $post->post_title); echo $content;?></h4>
-					<p>M, W, Th, F: 10am - 5pm</p>
-					<p>T: 10am - 6pm</p>
-					<p>Sat: 9am - 2pm</p>
+					<div class="insurance">
+						<?php $post = get_post(67); $content = apply_filters('the_content', $post->post_content); echo $content;?>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-6 text-center">
+
+			<div class="row content">
+				<div class="col-md-4 text-center">
+					<?php $post = get_post(63); $content = apply_filters('the_content', $post->post_content); echo $content;?>
+				</div>
+				<div class="col-md-4 text-center">
+					<h4>Office Location</h4>
 					<p>
 						<?= get_option('qs_contact_street2'); ?>
 					</p>
@@ -143,21 +118,24 @@ Template Name: Homepage
 						<?= get_option('qs_contact_zip2'); ?>
 					</p>
 				</div>
-				<div class="col-md-6 text-center">
+				<div class="col-md-4 text-center">
+					<h4>Office Numbers</h4>
 					<p>Tel: <a href="tel:<?= get_option("qs_contact_phone2"); ?>"><?= get_option("qs_contact_phone2"); ?></a></p>
 					<p>Fax: <?= get_option("qs_contact_fax2"); ?></p>
 				</div>
 			</div>
+
 			<div class="map">
 	 			<div id="mineola-map">
 					<img src="#" alt="Static fallback image"/>
 				</div>
 	 		</div>	
-			</div> <!-- .row -->
 		</div>
-		<!-- END PANEL #mineola -->
+	<!-- END PANEL #mineola -->
 
 	</div>
+	
+
 	<!-- END Tab panes -->
 
 </section> <!-- /.wrap .container-->

@@ -19,7 +19,7 @@
 				
 				<div class="health-grades">
 					<?php if (types_render_field("doc-health-grades", array('raw' => 'true'))): ?>
-						<br><a class="btn btn-default btn-lg" href="<?= types_render_field("doc-health-grades", array('raw' => 'true')); ?>">View My Profile on Health Grades</a>
+						<br><a class="btn btn-default btn-sm" href="<?= types_render_field("doc-health-grades", array('raw' => 'true')); ?>">View My Profile on Health Grades</a>
 					<?php endif; ?>
 				</div>
 

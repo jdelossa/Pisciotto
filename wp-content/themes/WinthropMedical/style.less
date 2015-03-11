@@ -46,9 +46,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 @light-gray: #cccccc;
 @dark-gray: #575757;
 
-@blue: #41678C;
+@blue: #356391;
 @dark-blue: #1c4773;
-@green: lighten(#889425, 5%);
+@green: #669B0D;
 
 /********************* HTML ELEMENTS *********************/
 html {
@@ -75,10 +75,6 @@ p,address,li {
   font-size: 16px;
   font-weight: 400;
   color: darken(@dark-blue, 10%);
-}
-section h2, section h3 {
-  text-align: center;
-  margin: 15px 0;
 }
 section p {
   line-height: 1.75em;
@@ -124,8 +120,8 @@ ul{
 }
 .header {
   border-bottom: 2px solid @dark-blue;
-  margin: 10px auto;
-  width: 75px;
+  margin: 10px 0px;
+  width: 160px;
 }
 /********************* Header Contact *********************/
 .header-contact {
@@ -141,7 +137,7 @@ ul{
     color: @white;
     position: relative;
     top: 2px;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.03em;
   }
   a {
@@ -154,6 +150,7 @@ ul{
   background-color: @blue;
   top: 30px;
   height: 50px;
+   border-bottom: none;
 
   .navbar-header {
     position: relative;
@@ -164,13 +161,15 @@ ul{
   }
   .navbar {
     position: relative;
-    top: 6px;
+    top: 7px;
     li {
       display: inline-block;
+      letter-spacing: 0.02em;
 
       a {
         padding: 4px 10px;
         color: @white;
+        text-shadow: @dark-gray 1px 1px 1px;
           &:active, &:focus, &:hover {
             background-color: transparent !important;
           }
@@ -179,6 +178,11 @@ ul{
     .contact-button {
       background-color: @green;
       border-radius: 5px;
+
+      &:hover, &:active, &:focus{
+        background-color: @green !important;
+        color: @white !important;
+      }
     }
   }
 }
@@ -188,7 +192,6 @@ ul{
   margin-bottom: 0;
   background-color: darken(@silver, 10%);
   border-radius: 0 !important;
-  width: 100%;
   background: url('images/hero.png');
   background-repeat: no-repeat;
   background-position: center;
@@ -201,6 +204,7 @@ ul{
   .active {
     li {
       background-color: @white;
+      border-bottom: none !important;
     }
     a {
       color: @blue !important;
@@ -213,7 +217,7 @@ ul{
 
     a {
       color: @dark-gray;
-      font-size: 22px;
+      font-size: 24px;
       padding: 20px 15px !important;
     }
   }
@@ -227,7 +231,7 @@ ul{
 .tab-content {
   margin-bottom: 50px;
   .margin-bottom {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
     .border-left {
       border-left: solid 2px @dark-blue;
@@ -241,6 +245,9 @@ ul{
   margin: 20px auto;
   text-align: center;
 }
+.img-thumbnail {
+  max-width: 70%;
+}
 .single {
   b {
     text-transform: uppercase;
@@ -253,15 +260,29 @@ ul{
   }
   .img-container {
     text-align: center;
+    max-width: 100%;
   } 
   .btn {
-    width: 100%;
+    width: 70%;
+  }
+  h2 {
+    text-align: center;
+  }
+  .header {
+    margin: 10px auto;
   }
 }
 /********************* Contact Us *********************/
 #glendale-map, #mineola-map {
   width: 100% !important;
   height: 200px !important;
+}
+.contact {
+  padding-left: 15px;
+  font-size: 16px;
+}
+.insurance {
+  margin: 20px 0;
 }
 /********************* Footer *********************/
 .footer {
