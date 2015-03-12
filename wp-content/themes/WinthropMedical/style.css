@@ -82,7 +82,7 @@ h6 {
   letter-spacing: 0.025em;
   font-weight: 400;
   font-family: 'Source Sans Pro', sans-serif;
-  color: #356391;
+  color: #536273;
 }
 p,
 address,
@@ -91,7 +91,7 @@ li {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
-  color: #122e4a;
+  color: #3e4955;
 }
 section p {
   line-height: 1.75em;
@@ -99,7 +99,7 @@ section p {
 a,
 a:hover {
   font-family: 'Source Sans Pro', sans-serif;
-  color: #669b0d;
+  color: #4b729f;
 }
 a.title:hover {
   text-decoration: none !important;
@@ -136,13 +136,13 @@ ul {
   background-position: center;
 }
 .header {
-  border-bottom: 2px solid #1c4773;
+  border-bottom: 2px solid #536273;
   margin: 10px 0px;
   width: 160px;
 }
 /********************* Header Contact *********************/
 .header-contact {
-  background-color: #1c4773;
+  background-color: #536273;
   height: 30px;
   position: fixed;
   top: 0;
@@ -163,7 +163,7 @@ ul {
 }
 /********************* Navbar Fixed Top *********************/
 .navbar-fixed-top {
-  background-color: #356391;
+  background-color: #7799bf;
   top: 30px;
   height: 50px;
   border-bottom: none;
@@ -174,6 +174,7 @@ ul {
 }
 .navbar-fixed-top .navbar-header h3 {
   color: #ffffff;
+  text-shadow: #575757 1px 0 1px;
 }
 .navbar-fixed-top .navbar {
   position: relative;
@@ -186,7 +187,7 @@ ul {
 .navbar-fixed-top .navbar li a {
   padding: 4px 10px;
   color: #ffffff;
-  text-shadow: #575757 1px 1px 1px;
+  text-shadow: #575757 1px 0 1px;
 }
 .navbar-fixed-top .navbar li a:active,
 .navbar-fixed-top .navbar li a:focus,
@@ -194,13 +195,13 @@ ul {
   background-color: transparent !important;
 }
 .navbar-fixed-top .navbar .contact-button {
-  background-color: #669b0d;
+  background-color: #3e4955;
   border-radius: 5px;
 }
 .navbar-fixed-top .navbar .contact-button:hover,
 .navbar-fixed-top .navbar .contact-button:active,
 .navbar-fixed-top .navbar .contact-button:focus {
-  background-color: #669b0d !important;
+  background-color: #7799bf !important;
   color: #ffffff !important;
 }
 /********************* Jumbotron *********************/
@@ -209,7 +210,7 @@ ul {
   margin-bottom: 0;
   background-color: #d5d5d5;
   border-radius: 0 !important;
-  background: url('images/hero.png');
+  background: #aaa;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -223,7 +224,7 @@ ul {
   border-bottom: none !important;
 }
 .nav-tabs .active a {
-  color: #356391 !important;
+  color: #536273 !important;
   border-left: none !important;
   border-right: none !important;
 }
@@ -241,13 +242,16 @@ ul {
 }
 /********************* Tab *********************/
 .tab-content {
-  margin-bottom: 50px;
+  margin-bottom: 39px;
+}
+.tab-content h4 {
+  text-decoration: underline;
 }
 .tab-content .margin-bottom {
   margin-bottom: 50px;
 }
 .tab-content .border-left {
-  border-left: solid 2px #1c4773;
+  border-left: solid 2px #536273;
 }
 /********************* Physicians *********************/
 .single-header {
@@ -257,6 +261,13 @@ ul {
   margin: 20px auto;
   text-align: center;
 }
+.doctor-card a {
+  color: #ffffff;
+}
+.doctor-card .btn {
+  margin-top: 10px;
+  background-color: #3e4955;
+}
 .img-thumbnail {
   max-width: 70%;
 }
@@ -264,7 +275,7 @@ ul {
   text-transform: uppercase;
   font-size: 12px;
   background-color: #eeeeee;
-  color: #356391;
+  color: #7799bf;
   padding: 2px 5px;
   width: 100%;
   display: inline-block;
@@ -297,7 +308,8 @@ ul {
 }
 /********************* Footer *********************/
 .footer {
-  background-color: #1c4773;
+  border-bottom: #536273 solid 2px;
+  background-color: #536273;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -326,6 +338,9 @@ ul {
   }
   .single .btn {
     width: 50%;
+  }
+  .doctor-card .btn {
+    width: 55%;
   }
 }
 @media (max-width: 767px) {

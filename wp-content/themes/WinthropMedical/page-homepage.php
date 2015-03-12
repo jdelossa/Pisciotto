@@ -34,10 +34,10 @@ Template Name: Homepage
 	    <div role="tabpanel" class="tab-pane fade in active content" id="glendale">
 			
 			<div class="row">
-				<div class="margin-bottom col-md-6">
+				<div class="margin-bottom col-md-8">
 					<?php $post = get_post(2); $content = apply_filters('the_content', $post->post_content); echo $content;?>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-4">
 					<?php get_template_part('doctor-images'); ?>
 				</div>
 			</div>
@@ -68,7 +68,7 @@ Template Name: Homepage
 					</p>
 				</div>
 				<div class="col-md-4 text-center">
-					<h4>Office Numbers</h4>
+					<h4>Phone Numbers</h4>
 					<p>Tel: <a href="tel:<?= get_option("qs_contact_phone"); ?>"><?= get_option("qs_contact_phone"); ?></a></p>
 					<p>Fax: <?= get_option("qs_contact_fax"); ?></p>
 				</div>
@@ -85,11 +85,11 @@ Template Name: Homepage
 	    <div role="tabpanel" class="tab-pane fade content" id="mineola">
 
 			<div class="row">
-				<div class="margin-bottom col-md-6">
+				<div class="margin-bottom col-md-8">
 					<?php $post = get_post(13); $content = apply_filters('the_content', $post->post_content); echo $content;?>
 				</div>
-				<div class="col-md-6">
-					<?php get_template_part('doctor-images'); ?>
+				<div class="col-md-4">
+					<?php get_template_part('doctor-images-2'); ?>
 				</div>
 			</div>
 
@@ -119,7 +119,7 @@ Template Name: Homepage
 					</p>
 				</div>
 				<div class="col-md-4 text-center">
-					<h4>Office Numbers</h4>
+					<h4>Phone Numbers</h4>
 					<p>Tel: <a href="tel:<?= get_option("qs_contact_phone2"); ?>"><?= get_option("qs_contact_phone2"); ?></a></p>
 					<p>Fax: <?= get_option("qs_contact_fax2"); ?></p>
 				</div>
