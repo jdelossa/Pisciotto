@@ -82,7 +82,7 @@ h6 {
   letter-spacing: 0.025em;
   font-weight: 400;
   font-family: 'Source Sans Pro', sans-serif;
-  color: #536273;
+  color: #3b5e74;
 }
 p,
 address,
@@ -91,7 +91,7 @@ li {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
-  color: #3e4955;
+  color: #2a4352;
 }
 section p {
   line-height: 1.75em;
@@ -99,7 +99,7 @@ section p {
 a,
 a:hover {
   font-family: 'Source Sans Pro', sans-serif;
-  color: #4b729f;
+  color: #466e83;
 }
 a.title:hover {
   text-decoration: none !important;
@@ -136,13 +136,13 @@ ul {
   background-position: center;
 }
 .header {
-  border-bottom: 2px solid #536273;
+  border-bottom: 2px solid #3b5e74;
   margin: 10px 0px;
   width: 160px;
 }
 /********************* Header Contact *********************/
 .header-contact {
-  background-color: #536273;
+  background-color: #3b5e74;
   height: 30px;
   position: fixed;
   top: 0;
@@ -163,7 +163,7 @@ ul {
 }
 /********************* Navbar Fixed Top *********************/
 .navbar-fixed-top {
-  background-color: #7799bf;
+  background-color: #6896ae;
   top: 30px;
   height: 50px;
   border-bottom: none;
@@ -195,18 +195,18 @@ ul {
   background-color: transparent !important;
 }
 .navbar-fixed-top .navbar .contact-button {
-  background-color: #3e4955;
+  background-color: #2a4352;
   border-radius: 5px;
 }
 .navbar-fixed-top .navbar .contact-button:hover,
 .navbar-fixed-top .navbar .contact-button:active,
 .navbar-fixed-top .navbar .contact-button:focus {
-  background-color: #7799bf !important;
+  background-color: #6896ae !important;
   color: #ffffff !important;
 }
 /********************* Jumbotron *********************/
 .jumbotron {
-  height: 300px;
+  height: 400px;
   margin-bottom: 0;
   background-color: #d5d5d5;
   border-radius: 0 !important;
@@ -224,7 +224,7 @@ ul {
   border-bottom: none !important;
 }
 .nav-tabs .active a {
-  color: #536273 !important;
+  color: #3b5e74 !important;
   border-left: none !important;
   border-right: none !important;
 }
@@ -238,7 +238,8 @@ ul {
 }
 /********************* About *********************/
 #about {
-  background-color: #ffffff;
+  position: relative;
+  bottom: 50px;
 }
 /********************* Tab *********************/
 .tab-content {
@@ -251,7 +252,7 @@ ul {
   margin-bottom: 50px;
 }
 .tab-content .border-left {
-  border-left: solid 2px #536273;
+  border-left: solid 2px #3b5e74;
 }
 /********************* Physicians *********************/
 .single-header {
@@ -266,7 +267,7 @@ ul {
 }
 .doctor-card .btn {
   margin-top: 10px;
-  background-color: #3e4955;
+  background-color: #2a4352;
 }
 .img-thumbnail {
   max-width: 70%;
@@ -275,7 +276,7 @@ ul {
   text-transform: uppercase;
   font-size: 12px;
   background-color: #eeeeee;
-  color: #7799bf;
+  color: #3b5e74;
   padding: 2px 5px;
   width: 100%;
   display: inline-block;
@@ -308,8 +309,8 @@ ul {
 }
 /********************* Footer *********************/
 .footer {
-  border-bottom: #536273 solid 2px;
-  background-color: #536273;
+  border-bottom: #2a4352 solid 2px;
+  background-color: #2a4352;
   position: absolute;
   bottom: 0;
   width: 100%;

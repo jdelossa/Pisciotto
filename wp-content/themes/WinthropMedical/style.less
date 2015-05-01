@@ -45,9 +45,9 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 @silver: #eeeeee;
 @light-gray: #cccccc;
 @dark-gray: #575757;
-
-@blue: #7799BF;
-@dark-blue: #536273;
+@brown: #726252;
+@blue: #6896ae;
+@dark-blue: #3b5e74;
 
 /********************* HTML ELEMENTS *********************/
 html {
@@ -188,7 +188,7 @@ ul{
 }
 /********************* Jumbotron *********************/
 .jumbotron {
-  height: 300px; 
+  height: 400px; 
   margin-bottom: 0;
   background-color: darken(@silver, 10%);
   border-radius: 0 !important;
@@ -223,7 +223,8 @@ ul{
 }
 /********************* About *********************/
 #about {
-  background-color: @white;
+  position: relative;
+  bottom: 50px;
 }
 
 /********************* Tab *********************/
@@ -263,7 +264,7 @@ ul{
     text-transform: uppercase;
     font-size: 12px;
     background-color: @silver;
-    color: @blue;
+    color: @dark-blue;
     padding: 2px 5px;
     width: 100%;
     display: inline-block;
@@ -296,8 +297,8 @@ ul{
 }
 /********************* Footer *********************/
 .footer {
-  border-bottom: @dark-blue solid 2px;
-  background-color: @dark-blue;
+  border-bottom: darken(@dark-blue, 10%) solid 2px;
+  background-color: darken(@dark-blue, 10%);
   position: absolute;
   bottom: 0;
   width: 100%;

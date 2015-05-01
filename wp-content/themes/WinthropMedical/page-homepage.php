@@ -6,12 +6,12 @@ Template Name: Homepage
 
 <?php get_header(); ?>
 
-<section id="about" class="container">
+<section id="hero">
 	<div class="jumbotron"></div>
 </section>
 
 
-<section class="wrap container">
+<section id="about" class="wrap container">
 
 	<!-- Nav tabs -->
 	<div id="nav-tabs">
