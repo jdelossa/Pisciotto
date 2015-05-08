@@ -4,10 +4,10 @@
  * For now full and embedded version use this script.
  * Before moving full-version-only code - make sure it's not needed here.
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.3/embedded/resources/js/basic.js $
- * $LastChangedDate: 2014-09-11 16:36:28 +0800 (Thu, 11 Sep 2014) $
- * $LastChangedRevision: 26949 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/resources/js/basic.js $
+ * $LastChangedDate: 2015-03-10 06:46:08 +0000 (Tue, 10 Mar 2015) $
+ * $LastChangedRevision: 1109249 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -19,6 +19,15 @@ var wpcfFormGroupsSupportTemplatesState = new Array();
 var wpcfFieldsEditorCallback_redirect = null;
 
 jQuery(document).ready(function(){
+    /**
+     * modal advertising
+     */
+    if(jQuery.isFunction(jQuery.fn.types_modal_box)) {
+        jQuery('.wpcf-disabled-on-submit').types_modal_box();
+    }
+    jQuery('.wpcf-notif-description a').on('click', function() {
+        jQuery(this).attr('target', '_blank');
+    });
     //user suggestion
     if(jQuery.isFunction(jQuery.suggest)) {
         jQuery('.input').suggest("admin-ajax.php?action=wpcf_types_suggest_user&tax=post_tag", {
@@ -155,7 +164,6 @@ jQuery(document).ready(function(){
                     jQuery('#'+parentID).append('<div class="wpcf-form-error-unique-value wpcf-form-error">'+wpcfFormUniqueValuesCheckText+'</div>');
                     jQuery(this).parents('fieldset').children('.fieldset-wrapper').slideDown();
                     jQuery(this).focus();
-
                 }
 
                 checkedArr[parentID].push(currentValue);
@@ -202,6 +210,12 @@ jQuery(document).ready(function(){
         // Check field slugs unique
         passed = true;
         checkedArr = new Array();
+        /**
+         * first fill array with defined, but unused fields
+         */
+        jQuery('#wpcf-form-groups-user-fields .wpcf-fields-add-ajax-link:visible').each(function(){
+            checkedArr.push(jQuery(this).data('slug'));
+        });
         jQuery('.wpcf-forms-field-slug').each(function(index){
             var currentValue = jQuery(this).val().toLowerCase();
             if (currentValue != ''
@@ -229,7 +243,7 @@ jQuery(document).ready(function(){
                 passed = false;
             }
         });
-        
+
         if (passed == false) {
             // Bind message fade out
             jQuery('.wpcf-forms-field-slug').live('keyup', function(){
@@ -251,6 +265,7 @@ jQuery(document).ready(function(){
         var updateAdd = wpcfGetParameterByName('wpcf_ajax_update_add', jQuery(this).attr('href'));
         var warning = wpcfGetParameterByName('wpcf_warning', jQuery(this).attr('href'));
         var thisObject = jQuery(this);
+        var thisObjectTR = jQuery(this).closest('tr');
         if (warning != false) {
             var answer = confirm(warning);
             if (answer == false) {
@@ -261,7 +276,6 @@ jQuery(document).ready(function(){
             url: jQuery(this).attr('href'),
             type: 'get',
             dataType: 'json',
-            //            data: ,
             cache: false,
             beforeSend: function() {
                 if (update != false) {
@@ -285,6 +299,17 @@ jQuery(document).ready(function(){
                         && (typeof data.wpcf_nonce_ajax_callback != 'undefined'
                             && data.wpcf_nonce_ajax_callback == wpcf_nonce_ajax_callback)) {
                         eval(data.execute);
+                    }
+                    if (typeof data.status != 'undefined' ) {
+                        if ( 'inactive' == data.status ) {
+                            thisObjectTR.addClass('status-inactive');
+
+                        } else {
+                            thisObjectTR.removeClass('status-inactive');
+                        }
+                    }
+                    if (typeof data.status_label != 'undefined' ) {
+                        jQuery('td.status', thisObjectTR).html(data.status_label);
                     }
                 }
                 if (callback != false) {
@@ -355,6 +380,16 @@ jQuery(document).ready(function(){
             jQuery('#wpcf-types-form-rewrite-toggle').slideDown();
         } else {
             jQuery('#wpcf-types-form-rewrite-toggle').slideUp();
+        }
+    });
+    /**
+     * meta_box_cb
+     */
+    jQuery('.wpcf-tax-form input[name="ct[meta_box_cb][disabled]"]').change(function(){
+        if (jQuery(this).is(':checked')) {
+            jQuery('#wpcf-types-form-meta_box_cb-toggle').slideUp();
+        } else {
+            jQuery('#wpcf-types-form-meta_box_cb-toggle').slideDown();
         }
     });
     jQuery('input[name="ct[show_in_menu]"]').change(function(){
@@ -494,7 +529,9 @@ function wpcfCdCheckDateCustomized(object) {
  */
 function wpcfLoadingButton() {
     jQuery('.wpcf-disabled-on-submit').attr('disabled', 'disabled').each(function(){
-        jQuery(this).after('<div id="'+jQuery(this).attr('id')+'-loading" class="wpcf-loading">&nbsp;</div>');
+        if ( 'undefined' == typeof(types_modal) ) {
+            jQuery(this).after('<div id="'+jQuery(this).attr('id')+'-loading" class="wpcf-loading">&nbsp;</div>');
+        }
     });
 }
 /**
@@ -503,17 +540,10 @@ function wpcfLoadingButton() {
 function wpcfLoadingButtonStop() {
     jQuery('.wpcf-disabled-on-submit').removeAttr('disabled');
     jQuery('.wpcf-loading').fadeOut();
-}
-
-/**
- * Controls supports title or body Warning.
- */
-function wpcfTitleEditorCheck() {
-    if (!jQuery('#wpcf-supports-title').is(':checked') && !jQuery('#wpcf-supports-editor').is(':checked')) {
-        jQuery('#wpcf-types-title-editor-warning').fadeIn();
-    } else {
-        jQuery('#wpcf-types-title-editor-warning').fadeOut();
-    }
+    //Fix https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/194177056/comments
+    //type modal didnt disappeared
+    jQuery('.types_modal_box').remove();
+    jQuery('.types_block_page').remove();
 }
 
 /**

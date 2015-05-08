@@ -1,10 +1,10 @@
 <?php
 /**
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.1/embedded/includes/fields/video.php $
- * $LastChangedDate: 2014-07-15 22:18:54 +0800 (Tue, 15 Jul 2014) $
- * $LastChangedRevision: 24974 $
- * $LastChangedBy: marcin $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/includes/fields/video.php $
+ * $LastChangedDate: 2015-03-16 12:03:31 +0000 (Mon, 16 Mar 2015) $
+ * $LastChangedRevision: 1113864 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -28,6 +28,8 @@ function wpcf_fields_video() {
  * View function.
  * 
  * @global type $wp_embed
+ * @global object $wpdb
+ *
  * @param type $field
  * @return string
  */
@@ -83,9 +85,12 @@ function wpcf_fields_video_editor_callback( $field, $data, $meta_type, $post ) {
         if ( !empty( $file ) ) {
             // Get attachment by guid
             global $wpdb;
-            $attachment_id = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts}
-    WHERE post_type = 'attachment' AND guid=%s",
-                            $file ) );
+            $attachment_id = $wpdb->get_var(
+                $wpdb->prepare(
+                    "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'attachment' AND guid=%s",
+                    $file
+                )
+            );
         }
     }
 

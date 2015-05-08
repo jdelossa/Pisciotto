@@ -3,7 +3,7 @@
 	  <div class="row-fluid">
 	    <div class="col-sm-6">
 	      <div class="footer-logo">
-	        <a href="http://www.winthrop.org" target="_blank"><img src="<?php bloginfo('template_directory');?>/images/affiliate.png" alt="affliate"></a>
+	        <a href="http://www.winthrop.org" target="_blank"><img src="<?php bloginfo('template_directory');?>/library/img/affiliate.png" alt="affliate"></a>
 	      </div>
 	    </div>
 	    <div class="col-sm-6">

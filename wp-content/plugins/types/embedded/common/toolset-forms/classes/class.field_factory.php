@@ -2,10 +2,10 @@
 
 /**
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.field_factory.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/common/toolset-forms/classes/class.field_factory.php $
+ * $LastChangedDate: 2015-03-02 10:49:00 +0000 (Mon, 02 Mar 2015) $
+ * $LastChangedRevision: 1103173 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -28,6 +28,17 @@ abstract class FieldFactory extends FieldAbstract
     {
         $cred_cred_settings = get_option( 'cred_cred_settings' );
         $this->_use_bootstrap = is_array($cred_cred_settings) && array_key_exists( 'use_bootstrap', $cred_cred_settings ) && $cred_cred_settings['use_bootstrap'];
+        $this->set_placeholder_as_attribute();
+    }
+
+    public function set_placeholder_as_attribute()
+    {
+        if ( !isset($this->_data['attribute']) ) {
+            $this->_data['attribute'] = array();
+        }
+        if ( isset($this->_data['placeholder']) && !empty($this->_data['placeholder'])) {
+            $this->_data['attribute']['placeholder'] = htmlentities(stripcslashes($this->_data['placeholder']));
+        }
     }
 
     public function set_metaform($metaform)
@@ -72,11 +83,21 @@ abstract class FieldFactory extends FieldAbstract
 
     public function getValue()
     {
-        return $this->_value;
+        global $post;
+        $value = $this->_value;
+        $value = apply_filters( 'wpcf_fields_value_get', $value, $post );
+        if ( array_key_exists('slug', $this->_data ) ) {
+            $value = apply_filters( 'wpcf_fields_slug_' . $this->_data['slug'] . '_value_get', $value, $post );
+        }
+        $value = apply_filters( 'wpcf_fields_type_' . $this->_data['type'] . '_value_get', $value, $post );
+        return $value;
     }
 
-    public function getTitle()
+    public function getTitle($_title = false)
     {
+        if ( $_title && empty($this->_data['title']) && isset($this->_data['_title']) ) {
+            return $this->_data['_title'];
+        }
         return $this->_data['title'];
     }
 
@@ -120,6 +141,14 @@ abstract class FieldFactory extends FieldAbstract
             return $this->_data['attribute'];
         }
         return array();
+    }
+
+    public function getWPMLAction()
+    {
+        if ( array_key_exists( 'wpml_action', $this->_data ) ) {
+            return $this->_data['wpml_action'];
+        }
+        return 0;
     }
 
     public static function registerScripts() {}

@@ -2,10 +2,10 @@
 /**
  * Types fields specific
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.types.php $
- * $LastChangedDate: 2014-09-18 09:37:16 +0000 (Thu, 18 Sep 2014) $
- * $LastChangedRevision: 992466 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/common/toolset-forms/classes/class.types.php $
+ * $LastChangedDate: 2015-03-02 10:49:00 +0000 (Mon, 02 Mar 2015) $
+ * $LastChangedRevision: 1103173 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -68,6 +68,7 @@ class WPToolset_Types
          *
          * Main settings that are returned.
          */
+
         $_field = array(
             'id' => $prefix . $field['id'] . $suffix, // Used as main ID (raw date wpt-id), used to connect conditional relations
             'meta_key' => $prefix . $field['id'], // Used by Types (meta key of field saved to DB)
@@ -82,6 +83,7 @@ class WPToolset_Types
             'repetitive' => self::isRepetitive( $field ), // Is repetitive?
             'validation' => self::filterValidation( $field ), // Validation settings
             'conditional' => self::filterConditional( $field, $post_id, $_post_wpcf ), // Conditional settings
+            'placeholder' => isset($field['data']) && isset($field['data']['placeholder'])? $field['data']['placeholder']:null, // HTML5 placeholder
         );
 
         /* Specific field settings
@@ -140,6 +142,7 @@ class WPToolset_Types
         if ( $field['type'] == 'radio' ) {
             $_field['type'] = 'radios';
         }
+
         return $cache[$cache_key] = $_field;
     }
 
@@ -314,7 +317,7 @@ class WPToolset_Types
 
         // Get [values]
         $cond_values = self::getConditionalValues($post_id, $field['meta_type']);
-        
+
 		if ( function_exists('wpcf_fields_get_field_by_slug') ){
             // Update the conditional values according to what's being saved.
             foreach ( $_post_wpcf as $field_slug => $field_value ) {
@@ -323,11 +326,10 @@ class WPToolset_Types
                 if ( empty( $field ) ) {
                     continue;
                 }
-                
-                $field_value = apply_filters( 'wpcf_fields_type_' . $field['type']
-                        . '_value_save', $field_value, $field, null );
-                
-                $cond_values[$field['meta_key']] = $field_value;                
+
+                $field_value = apply_filters( 'wpcf_fields_type_' . $field['type'] . '_value_save', $field_value, $field, null );
+
+                $cond_values[$field['meta_key']] = $field_value;
             }
         }
 
@@ -382,7 +384,7 @@ class WPToolset_Types
         unset( $cond_values, $c_values, $c_field );
         return $cache[$cache_key] = $cond;
     }
-    
+
     public static function getConditionalValues($post_id, $meta_type = 'postmeta') {
         $cond_values = array();
         if ( !empty( $post_id ) ) {
@@ -396,10 +398,10 @@ class WPToolset_Types
                 $v = self::getStringFromArray($v);
             }
         }
-        
+
         return $cond_values;
     }
-    
+
     public static function getCustomConditional($custom, $suffix = '', $cond_values = array()) {
         $c_fields = WPToolset_Forms_Conditional::extractFields( $custom );
         $c_values = array();
@@ -439,7 +441,7 @@ class WPToolset_Types
             'custom' => $custom,
             'values' => $c_values,
         );
-        
+
         return $cond;
     }
 

@@ -4,10 +4,10 @@
  *
  * Since Types 1.2
  *
- * $HeadURL: https://www.onthegosystems.com/misc_svn/cck/tags/1.6.3/embedded/includes/module-manager.php $
- * $LastChangedDate: 2014-09-02 22:15:40 +0800 (Tue, 02 Sep 2014) $
- * $LastChangedRevision: 26638 $
- * $LastChangedBy: riccardo $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/includes/module-manager.php $
+ * $LastChangedDate: 2015-03-25 12:38:40 +0000 (Wed, 25 Mar 2015) $
+ * $LastChangedRevision: 1120400 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -775,7 +775,7 @@ function wpcf_admin_export_selected_data ( array $items, $_type = 'all', $return
  *
  * Import selected items given by xmlstring.
  *
- * @global type $wpdb
+ * @global object $wpdb
  * @global type $iclTranslationManagement
  * @param type $data
  * @param type $_type
@@ -850,10 +850,13 @@ function wpcf_admin_import_data_from_xmlstring( $data = '', $_type = 'types',
                 'post_content' => !empty( $group['post_content'] ) ? $group['post_content'] : '',
             );
             if ( (isset( $group['add'] ) && $group['add'] ) ) {
-                $post_to_update = $wpdb->get_var( $wpdb->prepare(
-                                "SELECT ID FROM $wpdb->posts
-                    WHERE post_title = %s AND post_type = %s",
-                                $group['post_title'], 'wp-types-group' ) );
+                $post_to_update = $wpdb->get_var(
+                    $wpdb->prepare(
+                        "SELECT ID FROM $wpdb->posts WHERE post_title = %s AND post_type = %s",
+                        $group['post_title'],
+                        'wp-types-group'
+                    )
+                );
                 // Update (may be forced by bulk action)
                 if ( $group['update'] || (!empty( $post_to_update )) ) {
                     if ( !empty( $post_to_update ) ) {
@@ -1036,21 +1039,20 @@ function wpcf_admin_import_data_from_xmlstring( $data = '', $_type = 'types',
         update_option( 'wpcf-custom-types', $types_existing );
 
         // Add relationships
-        if ( !empty( $data->post_relationships ) ) {
-            $relationship_existing = get_option( 'wpcf_post_relationship', array() );
-            /**
-             * be sure, $relationship_existing is a array!
-             */
-            if ( !is_array( $relationship_existing ) ) {
-                $relationship_existing = array();
-            }
-            foreach ( $data->post_relationships->post_relationship as $relationship ) {
-                $relationship = json_decode( $relationship, true );
-                $relationship = array_merge( $relationship_existing,
-                        $relationship );
-                update_option( 'wpcf_post_relationship', $relationship );
-                break;
-            }
+        /** EMERSON: Restore Types relationships when importing modules */
+        if ( !empty( $data->post_relationships )) {
+        	$relationship_existing = get_option( 'wpcf_post_relationship', array() );
+        	/**
+        	 * be sure, $relationship_existing is a array!
+        	*/
+        	if ( !is_array( $relationship_existing ) ) {
+        		$relationship_existing = array();
+        	}
+        	$relationship = json_decode( $data->post_relationships->data, true );
+        	if ( is_array( $relationship ) ) {
+        		$relationship = array_merge( $relationship_existing, $relationship );
+        		update_option( 'wpcf_post_relationship', $relationship );
+        	}
         }
     }
 

@@ -318,6 +318,23 @@ function wpcf_fields_date_value_get_filter( $value, $field, $return = 'array',
          * Consider this already parsed
          * but check anyway.
          */
+        if (
+            array_key_exists('datepicker', $value)
+            && !array_key_exists('timestamp', $value)
+            //Fix date pre-1970 issue
+            //https://wp-types.com/forums/topic/pre-1971-dates-throw-error/#post-288989
+            //https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/194818870/comments
+            && (
+                preg_match( '/^\d+$/', $value['datepicker'] )
+                || ( 
+                 -12219292800 <= $value['datepicker'] 
+                 && $value['datepicker'] <= 32535215940
+                )
+               )
+                    ) {
+            $value['timestamp'] = $value['datepicker'];
+            unset($value['datepicker']);
+        }
         $value = wpcf_fields_date_value_check( $value );
     } else {
         $value = array(

@@ -2,10 +2,10 @@
 /*
  * Post relationship class.
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/classes/relationship.php $
- * $LastChangedDate: 2014-08-22 01:02:43 +0000 (Fri, 22 Aug 2014) $
- * $LastChangedRevision: 970205 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/classes/relationship.php $
+ * $LastChangedDate: 2015-03-25 12:38:40 +0000 (Wed, 25 Mar 2015) $
+ * $LastChangedRevision: 1120400 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -201,8 +201,8 @@ class WPCF_Relationship
     /**
      * Bulk saving children.
      *
-     * @param type $parent_id
-     * @param type $children
+     * @param int $parent_id
+     * @param array $children Array $child_id => $fields. For details about $fields see save_child().
      */
     function save_children($parent_id, $children)
     {
@@ -214,13 +214,13 @@ class WPCF_Relationship
     /**
      * Unified save child function.
      *
-     * @param type $child_id
-     * @param type $parent_id
+     * @param int $parent_id
+     * @param int $child_id
+     * @param array $save_fields
+     * @return bool|WP_Error
      */
     function save_child( $parent_id, $child_id, $save_fields = array() )
     {
-        global $wpdb;
-
         $parent = get_post( intval( $parent_id ) );
         $child = get_post( intval( $child_id ) );
         $post_data = array();
@@ -254,6 +254,7 @@ class WPCF_Relationship
             $post_title = $save_fields['_wp_title'];
         }
 
+
         $post_data['post_title'] = $post_title;
         $post_data['post_content'] = isset( $save_fields['_wp_body'] ) ? $save_fields['_wp_body'] : $child->post_content;
         $post_data['post_type'] = $child->post_type;
@@ -275,7 +276,31 @@ class WPCF_Relationship
          * UPDATE POST
          */
 
+        $cf = new WPCF_Field;
+        if (
+            isset( $_POST['wpcf_post_relationship'][$parent_id])
+            && isset( $_POST['wpcf_post_relationship'][$parent_id][$child_id] )
+        ) {
+            $_POST['wpcf'] = array();
+            foreach( $_POST['wpcf_post_relationship'][$parent_id][$child_id] as $slug => $value ) {
+                $_POST['wpcf'][$cf->__get_slug_no_prefix( $slug )] = $value;
+                $_POST['wpcf'][$slug] = $value;
+            }
+        }
+        unset($cf);
+
+        /**
+         * avoid filters for children
+         * /
+        global $wp_filter;
+        $save_post = $wp_filter['save_post'];
+        $wp_filter['save_post'] = array();
+         */
         $updated_id = wp_update_post( $post_data );
+        /*
+            $wp_filter['save_post'] = $save_post;
+         */
+        unset($save_post);
         if ( empty( $updated_id ) ) {
             return new WP_Error( 'relationship-update-post-failed', 'Updating post failed' );
         }
@@ -366,37 +391,47 @@ class WPCF_Relationship
     /**
      * Saves new child.
      *
-     * @param type $parent_id
-     * @param type $post_type
-     * @return type
+     * @param int $parent_id
+     * @param string $post_type
+     * @return int|WP_Error
      */
     function add_new_child($parent_id, $post_type)
     {
         global $wpdb;
-
         $parent = get_post( $parent_id );
         if ( empty( $parent ) ) {
             return new WP_Error( 'wpcf-relationship-no-parent', 'No parent' );
         }
         $new_post = array(
-            'post_title' => ' ', // WP requires at least title with space
+            'post_title' => __('New'). ': '.$post_type,
             'post_type' => $post_type,
             'post_status' => 'draft',
         );
         $id = wp_insert_post( $new_post, true );
-        if ( !is_wp_error( $id ) ) {
-            // Mark that it is new post
-            update_post_meta( $id, '_wpcf_relationship_new', 1 );
-            // Save relationship
-            update_post_meta( $id,
-                    '_wpcf_belongs_' . $parent->post_type . '_id', $parent->ID );
-            // Fix title
-            $wpdb->update( $wpdb->posts,
-                    array('post_title' => $post_type . ' ' . $id),
-                    array('ID' => $id), array('%s'), array('%d') );
-            do_action( 'wpcf_relationship_add_child', get_post( $id ), $parent );
-            wp_cache_flush();
+        /**
+         * return wp_error
+         */
+        if ( is_wp_error( $id ) ) {
+            return $id;
         }
+        /**
+         * Mark that it is new post
+         */
+        update_post_meta( $id, '_wpcf_relationship_new', 1 );
+        /**
+         * Save relationship
+         */
+        update_post_meta( $id, '_wpcf_belongs_' . $parent->post_type . '_id', $parent->ID );
+        /**
+         * Fix title
+         */
+        $wpdb->update(
+            $wpdb->posts,
+            array('post_title' => $post_type . ' ' . $id),
+            array('ID' => $id), array('%s'), array('%d')
+        );
+        do_action( 'wpcf_relationship_add_child', get_post( $id ), $parent );
+        wp_cache_flush();
         return $id;
     }
 
@@ -492,5 +527,46 @@ class WPCF_Relationship
         }
         die();
     }
+
+    /**
+     * Meta box form on post edit page.
+     *
+     * @param type $parent Parent post
+     * @param type $post_type Child post type
+     * @return type string HTML formatted list
+     */
+    function child_list($parent, $post_type)
+    {
+        if ( is_integer( $parent ) ) {
+            $parent = get_post( $parent );
+        }
+        $output = '';
+        require_once dirname( __FILE__ ) . '/relationship/form-child.php';
+        $this->child_form = new WPCF_Relationship_Child_Form(
+                        $parent,
+                        $post_type,
+                        $this->settings( $parent->post_type, $post_type )
+                    );
+        foreach($this->child_form->children as $child) {
+            $output .= sprintf(
+                '<li>%s</li>',
+                apply_filters('post_title', $child->post_title)
+            );
+        }
+        if ( $output ) {
+            $output = sprintf(
+                '<ul>%s</ul>',
+                $output
+            );
+        } else {
+            $output = sprintf(
+                '<p class="info">%s</p>',
+                $this->child_form->child_post_type_object->labels->not_found
+            );
+        }
+
+        return $output;
+    }
+
 
 }

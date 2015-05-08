@@ -3,7 +3,7 @@
     $args = array(
         'order' => 'ASC',
         'post_type' => 'post',
-        'category' => '2', //Category ID for 'Doctors in Glendale'
+        'category' => '2,3', //Category ID for 'Doctors in Glendale'
         'numberposts' => 100
     );
 

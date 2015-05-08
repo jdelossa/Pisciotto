@@ -2,10 +2,10 @@
 
 /**
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.taxonomy.php $
- * $LastChangedDate: 2014-09-18 09:37:16 +0000 (Thu, 18 Sep 2014) $
- * $LastChangedRevision: 992466 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/common/toolset-forms/classes/class.taxonomy.php $
+ * $LastChangedDate: 2015-03-25 12:38:40 +0000 (Wed, 25 Mar 2015) $
+ * $LastChangedRevision: 1120400 $
+ * $LastChangedBy: iworks $
  *
  */
 
@@ -26,40 +26,15 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
             $this->objValues[$term->slug] = $term;
             $i++;
         }
-
-        wp_register_script( 'wptoolset-jquery-autocompleter',
-                WPTOOLSET_FORMS_RELPATH . '/js/jquery.autocomplete.js',
-                array('jquery'), WPTOOLSET_FORMS_VERSION, true );
-
-        wp_register_style('wptoolset-autocompleter', WPTOOLSET_FORMS_RELPATH.'/css/autocompleter.css');
-        wp_enqueue_script('wptoolset-jquery-autocompleter');
+		
         add_action( 'wp_footer', array($this, 'javascript_autocompleter') );
     }
 
     public function javascript_autocompleter() {
-            $autosubmit = 'function onSelectItem(row)
-                           {
-                                jQuery("input#'.$this->getName().'").focus();
-                           }';
-            $extra = '
-                    function formatItem(row) {
-                            return row[0];
-                    }
-                    function formatItem2(row) {
-                        if(row.length == 3){
-                            var attr = "attr=\"" + row[2] + "\"";
-                        } else {
-                            attr = "";
-                        }
-                        return "<span "+attr+">" + row[1] + " matches</span>" + row[0];
-                    }';
-            $results = 1;
             echo '<script type="text/javascript">
                     jQuery(document).ready(function() {
                             initTaxonomies("'. $this->values .'", "'.$this->getName().'", "'.WPTOOLSET_FORMS_RELPATH.'", "'.$this->_nameField.'");
                     });
-                    '.$autosubmit.'
-                    '.$extra.'
             </script>';
     }
 
@@ -104,7 +79,7 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
             '#title' => '',
             '#description' => '',
             '#name' => "new_tax_button_".$taxonomy,
-            '#value' => esc_attr( $attributes['add_text'] ),
+            '#value' => apply_filters('toolset_button_add_text', esc_attr( $attributes['add_text'] )),
             '#attributes' => array(
 				'class' => $use_bootstrap ? 'btn btn-default wpt-taxonomy-add-new js-wpt-taxonomy-add-new' : 'wpt-taxonomy-add-new js-wpt-taxonomy-add-new',
 				'data-taxonomy' => $taxonomy,
@@ -132,12 +107,12 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
 			'#title' => '',
 			'#description' => '',
 			'#name' => "sh_".$taxonomy,
-			'#value' => esc_attr( $attributes['show_popular_text'] ),
+			'#value' => apply_filters('toolset_button_show_popular_text', esc_attr( $attributes['show_popular_text'] )),
 			'#attributes' => array(
 				'class' => $use_bootstrap ? 'btn btn-default popular wpt-taxonomy-popular-show-hide js-wpt-taxonomy-popular-show-hide' : 'popular wpt-taxonomy-popular-show-hide js-wpt-taxonomy-popular-show-hide',
 				'data-taxonomy' => $this->getName(),
-				'data-show-popular-text' => esc_attr( $attributes['show_popular_text'] ),
-				'data-hide-popular-text' => esc_attr( $attributes['hide_popular_text'] ),
+				'data-show-popular-text' => apply_filters('toolset_button_show_popular_text', esc_attr( $attributes['show_popular_text'] )),
+				'data-hide-popular-text' => apply_filters('toolset_button_hide_popular_text', esc_attr( $attributes['hide_popular_text'] )),
 				'data-after-selector' => 'js-show-popular-after',
 				'style' => $show ? '' : 'display:none;'
 			),
@@ -222,14 +197,18 @@ class WPToolset_Field_Taxonomy extends WPToolset_Field_Textfield
 			);
 		}
 
-        $style = '';
         foreach($terms as $term) {
+            $style = '';
             if ( $add_sizes ) {
-                $font_size = ( ( $term->count - $min ) * 10 ) / ( $max - $min ) + 5;
-                $style = sprintf( ' style="font-size:1.%dem;"', $font_size );
+                $font_size = ( ( $term->count - $min ) * 10 ) / ( $max - $min ) + 8;
+                $style = sprintf( ' style="font-size:%fem;"', $font_size/10 );
             }
+            $clases = array('wpt-taxonomy-popular-add', 'js-wpt-taxonomy-popular-add');
+            $clases[] = 'tax-'.$term->slug;
+            $clases[] = 'taxonomy-'.$this->getName().'-'.$term->term_id;
             $content .= sprintf(
-                '<a href="#" class="wpt-taxonomy-popular-add js-wpt-taxonomy-popular-add" data-slug="%s" data-name="%s" data-taxonomy="%s"%s>%s</a> ',
+                '<a href="#" class="%s" data-slug="%s" data-name="%s" data-taxonomy="%s"%s>%s</a> ',
+                implode(' ', $clases ),
                 $term->slug,
                 $term->name,
                 $this->getName(),

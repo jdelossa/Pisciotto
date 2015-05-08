@@ -125,7 +125,7 @@ ul {
   margin: 0;
 }
 .line-separator {
-  background-image: url(images/separator.png);
+  background-image: url(library/img/separator.png);
 }
 .separator {
   display: block;

@@ -10,10 +10,10 @@ define( "CLASS_NAME_PREFIX", "WPToolset_Field_" );
  * Creation Form Class
  * @author onTheGo System
  *
- * $HeadURL: http://plugins.svn.wordpress.org/types/trunk/embedded/common/toolset-forms/classes/class.form_factory.php $
- * $LastChangedDate: 2014-08-27 08:49:51 +0000 (Wed, 27 Aug 2014) $
- * $LastChangedRevision: 973824 $
- * $LastChangedBy: brucepearson $
+ * $HeadURL: http://plugins.svn.wordpress.org/types/tags/1.6.6.3/embedded/common/toolset-forms/classes/class.form_factory.php $
+ * $LastChangedDate: 2015-04-01 14:15:17 +0000 (Wed, 01 Apr 2015) $
+ * $LastChangedRevision: 1125405 $
+ * $LastChangedBy: iworks $
  *
  *
  */
@@ -37,8 +37,12 @@ class FormFactory extends FormAbstract
 
         wp_register_script( 'wptoolset-forms',
             WPTOOLSET_FORMS_RELPATH . '/js/main.js',
-            array('jquery', 'underscore'), WPTOOLSET_FORMS_VERSION, false );
+            array('jquery', 'underscore', 'suggest'), WPTOOLSET_FORMS_VERSION, false );
         wp_enqueue_script( 'wptoolset-forms' );
+		$wptoolset_forms_localization = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php', null )
+		);
+		wp_localize_script( 'wptoolset-forms', 'wptoolset_forms_local', $wptoolset_forms_localization );
 
         if ( is_admin() ) {
             wp_register_style( 'wptoolset-forms-admin',
@@ -52,10 +56,22 @@ class FormFactory extends FormAbstract
             $cred_cred_settings = get_option( 'cred_cred_settings' );
             /**
              * load or not cred.css
+             * and check use bootstrap
              */
             $load_cred_css = true;
-            if ( is_array($cred_cred_settings) && array_key_exists('dont_load_cred_css', $cred_cred_settings ) && $cred_cred_settings['dont_load_cred_css'] ) {
-                $load_cred_css = false;
+            if ( is_array($cred_cred_settings) ) {
+                if (
+                    array_key_exists('dont_load_cred_css', $cred_cred_settings )
+                    && $cred_cred_settings['dont_load_cred_css']
+                ) {
+                    $load_cred_css = false;
+                }
+                if (
+                    array_key_exists( 'use_bootstrap', $cred_cred_settings )
+                    && $cred_cred_settings['use_bootstrap']
+                ) {
+                    $this->_use_bootstrap = true;
+                }
             }
             /**
              * register
@@ -68,10 +84,6 @@ class FormFactory extends FormAbstract
                     WPTOOLSET_FORMS_VERSION
                 );
                 wp_enqueue_style( 'wptoolset-forms-cred' );
-            }
-
-            if ( array_key_exists( 'use_bootstrap', $cred_cred_settings ) && $cred_cred_settings['use_bootstrap'] ) {
-                $this->_use_bootstrap = true;
             }
         }
     }
@@ -170,16 +182,28 @@ class FormFactory extends FormAbstract
          */
         $config['use_bootstrap'] = $this->theForm->form_settings['use_bootstrap'];
         $config['has_media_button'] = $this->theForm->form_settings['has_media_button'];
+        /**
+         * WMPL configuration
+         */
+        $config['wpml_action'] = $this->get_wpml_action($config['id']);
+
         $htmlArray = array();
         $_gnf = $global_name_field;
         $_cfg = $config;
         if ( empty( $value ) ) $value = array(null);
         elseif ( !is_array( $value ) ) $value = array($value);
         $count = 0;
-        foreach ( $value as $val ) {
+               
+        //Fix if i get skype i receive skype i have 2 elements array in $value !!
+        if ($config['type']=='skype') {
+            if (isset($value['style'])) unset($value['style']);
+            if (isset($value['button_style'])) unset($value['button_style']);
+        }
+        
+        foreach ( $value as $val ) {            
             if ( !empty( $config['repetitive'] ) ) {
                 $_gnf = $_cfg['name'] = "{$global_name_field}[{$count}]";
-            }
+            }     
             //CHECKGEN			
             if ( isset($_cfg['validation']) && 
                  is_array($_cfg['validation'])  && 
@@ -187,7 +211,7 @@ class FormFactory extends FormAbstract
                  !is_admin() && $_SERVER['REQUEST_METHOD'] == 'POST' &&
                  isset( $_GET['_tt'] ) && 
                  !isset( $_GET['_success'] ) && 
-                 !isset( $_GET['_success_message'] )  ) 
+                 !isset( $_GET['_success_message'] )  )
             {
                 $_cfg['validate'] = 1;	
             }
@@ -211,10 +235,24 @@ class FormFactory extends FormAbstract
                 }
                 $this->form[$global_name_field] = $form;
                 $this->field_count++;
-                $htmlArray[] = $this->theForm->renderElements( $form );
+                $htmlArray[] = $this->theForm->renderElements( $form );                
                 if ( empty( $config['repetitive'] ) ) break;
                 $count++;
-            } else echo "error";
+            } else {
+                if ( current_user_can('manage_options') ) {
+                    $htmlArray[] = sprintf(
+                        '<div id="message" class="error"><p>%s</p><p>%s</p></div>',
+                        //https://icanlocalize.basecamphq.com/projects/7393061-toolset/todo_items/196628627/comments#310360880
+                        //changed render to rendering
+                        sprintf(
+                            __('There is a problem rendering field <strong>%s (%s)</strong>.', 'wpv-views'),
+                            $_cfg['title'],
+                            $_cfg['type']
+                        ),
+                        $field->get_error_message()
+                    );
+                }
+            }            
         }
         if ( !empty( $htmlArray ) && isset($config['repetitive']) && $config['repetitive'] ) {
             $_gnf = $_cfg['name'] = "{$global_name_field}[%%{$count}%%]";
@@ -224,6 +262,7 @@ class FormFactory extends FormAbstract
                 $this->_repetitive()->add( $config, $tpl );
             }
         }
+
         return !empty( $htmlArray ) ? $this->_tpl( $config, $htmlArray ) : '';
     }
 
@@ -352,7 +391,7 @@ class FormFactory extends FormAbstract
                 {
                     $mess = $field->getTitle().' Field is required';
                     return new WP_Error( 'wptoolset_forms', $mess,
-                                array($field->getTitle().' Field is required') );;
+                                array($field->getTitle().' Field is required') );
                 }
             }     
         }
@@ -380,6 +419,15 @@ class FormFactory extends FormAbstract
     public function loadFieldClass( $type ) {
         $type = strtolower( $type );
         $class = $this->getClassFromType( $type );
+
+        /**
+         * try to load custom class
+         */
+        $loader = $class.'_loader';
+        if ( function_exists($loader) ) {
+            $loader();
+        }
+
         if ( !class_exists( $class ) ) {
             $file = WPTOOLSET_FORMS_ABSPATH . "/classes/class.{$type}.php";
             if ( file_exists( $file ) ) {
@@ -398,4 +446,16 @@ class FormFactory extends FormAbstract
         return class_exists( $class ) ? $class : false;
     }
 
+    private function get_wpml_action($id)
+    {
+        global $iclTranslationManagement;
+        if (
+            is_object($iclTranslationManagement)
+            && 'TranslationManagement' == get_class($iclTranslationManagement)
+            && isset($iclTranslationManagement->settings['custom_fields_translation'][$id])
+        ) {
+            return $iclTranslationManagement->settings['custom_fields_translation'][$id];
+        }
+        return 0;
+    }
 }

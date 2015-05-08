@@ -10,7 +10,7 @@
 	<title><?php wp_title( '|', true, 'right' ); ?></title>	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
-		<link href="<?php bloginfo('template_directory');?>/images/logo.png" rel="icon" type="image/png" >
+		<link href="<?php bloginfo('template_directory');?>/library/img/logo.png" rel="icon" type="image/png" >
 
 		<!-- Le Font Awesome!!! -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">

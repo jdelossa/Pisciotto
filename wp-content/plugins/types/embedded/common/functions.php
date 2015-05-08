@@ -4,6 +4,15 @@
  */
 define( 'ICL_COMMON_FUNCTIONS', true );
 
+// for retro compatibility with WP < 3.5
+if( !function_exists('wp_normalize_path') ){
+    function wp_normalize_path( $path ) {
+        $path = str_replace( '\\', '/', $path );
+        $path = preg_replace( '|/+|','/', $path );
+        return $path;
+    }
+}
+
 /**
  * Calculates relative path for given file.
  * 
@@ -11,24 +20,28 @@ define( 'ICL_COMMON_FUNCTIONS', true );
  * @return string Relative path
  */
 function icl_get_file_relpath( $file ) {
-    $is_https = isset( $_SERVER['HTTPS'] ) && strtolower( $_SERVER['HTTPS'] ) == 'on';
-    $http_protocol = $is_https ? 'https' : 'http';
-    $base_root = $http_protocol . '://' . $_SERVER['HTTP_HOST'];
-    $base_url = $base_root;
-    $dir = rtrim( dirname( $file ), '\/' );
-    if ( $dir ) {
-        $base_path = $dir;
-        $base_url .= $base_path;
-        $base_path .= '/';
-    } else {
-        $base_path = '/';
-    }
-    $relpath = $base_root
-            . str_replace(
-                    str_replace( '\\', '/',
-                            realpath( $_SERVER['DOCUMENT_ROOT'] ) )
-                    , '', str_replace( '\\', '/', dirname( $file ) )
-    );
+    // website url form DB
+    $url = get_option('siteurl');
+    // fix the protocol
+    $base_root = set_url_scheme( $url );
+
+    // normalise windows paths
+    $path_to_file = wp_normalize_path($file);
+    // get file directory
+    $file_dir = wp_normalize_path( dirname( $path_to_file ) );
+    // get the path to 'wp-content'
+    $from_content_dir = wp_normalize_path( realpath( WP_CONTENT_DIR ) );
+    // get wp-content dirname
+    $content_dir = wp_normalize_path( basename(WP_CONTENT_DIR) );
+
+    // remove absolute path part until 'wp-content' folder
+    $path = str_replace( $from_content_dir, '', $file_dir);
+    // add wp-content dir to path
+    $path = wp_normalize_path( $content_dir.$path );
+
+    // build url
+    $relpath = $base_root . '/' . $path;
+
     return $relpath;
 }
 
@@ -136,6 +149,8 @@ function wpv_condition( $atts, $post_to_check = null ) {
 
     add_filter( 'wpv-extra-condition-filters', 'wpv_add_time_functions' );
     $evaluate = apply_filters( 'wpv-extra-condition-filters', $evaluate );
+	
+	$logging_string .= "; After extra conditions: " . $evaluate;
 
     // evaluate empty() statements for variables
 	if ( $has_post ) {
@@ -152,8 +167,8 @@ function wpv_condition( $atts, $post_to_check = null ) {
 						|| ( is_array( $match_var ) && empty( $match_var ) ) ) {
 					$is_empty = '1=1';
 				}
-
 				$evaluate = str_replace( $matches[0][$i], $is_empty, $evaluate );
+				$logging_string .= "; After empty: " . $evaluate;
 			}
 		}
 	}
@@ -172,10 +187,9 @@ function wpv_condition( $atts, $post_to_check = null ) {
 				if ( strpos( $string, '$' ) === 0 ) {
 					$variable_name = substr( $string, 1 ); // omit dollar sign
 					if ( isset( $atts[$variable_name] ) ) {
-						$string = get_post_meta( $post->ID, $atts[$variable_name],
-								true );
-						$evaluate = str_replace( $matches[1][$i],
-								"'" . $string . "'", $evaluate );
+						$string = get_post_meta( $post->ID, $atts[$variable_name], true );
+						$evaluate = str_replace( $matches[1][$i], "'" . $string . "'", $evaluate );
+						$logging_string .= "; After variables I: " . $evaluate;
 					}
 				}
 			}
@@ -233,11 +247,10 @@ function wpv_condition( $atts, $post_to_check = null ) {
                     $evaluate = str_replace( $matches[0][$i], '1=0', $evaluate );
                 }
             } else {
-                $evaluate = str_replace( $matches[1][$i], $first_string,
-                        $evaluate );
-                $evaluate = str_replace( $matches[5][$i], $second_string,
-                        $evaluate );
+                $evaluate = str_replace( $matches[1][$i], $first_string, $evaluate );
+                $evaluate = str_replace( $matches[5][$i], $second_string, $evaluate );
             }
+			$logging_string .= "; After variables II: " . $evaluate;
         }
     }
 
@@ -248,10 +261,10 @@ function wpv_condition( $atts, $post_to_check = null ) {
         for ( $i = 0; $i < $strings_count; $i++ ) {
             $string = $matches[1][$i];
             // remove single quotes from string literals to get value only
-            $string = (strpos( $string, '\'' ) === 0) ? substr( $string, 1,
-                            strlen( $string ) - 2 ) : $string;
+            $string = (strpos( $string, '\'' ) === 0) ? substr( $string, 1, strlen( $string ) - 2 ) : $string;
             if ( is_numeric( $string ) ) {
                 $evaluate = str_replace( $matches[1][$i], $string, $evaluate );
+				$logging_string .= "; After variables III: " . $evaluate;
             }
         }
     }
@@ -279,6 +292,7 @@ function wpv_condition( $atts, $post_to_check = null ) {
 					$meta = "0";
 				}
 				$evaluate = str_replace( '$' . $match, $meta, $evaluate );
+				$logging_string .= "; After variables IV: " . $evaluate;
 			}
 		}
 	}
@@ -474,7 +488,7 @@ class WPV_wpcf_switch_post_from_attr_id
                 $this->found = true;
 
                 // save original post 
-                $this->post = isset( $post ) ? clone $post : null;
+                $this->post = ( isset( $post ) && ( $post instanceof WP_Post ) ) ? clone $post : null;
                 if ( $authordata ) {
                     $this->authordata = clone $authordata;
                 } else {
@@ -496,7 +510,7 @@ class WPV_wpcf_switch_post_from_attr_id
             global $post, $authordata, $id;
 
             // restore the global post values.
-            $post = isset( $this->post ) ? clone $this->post : null;
+            $post = ( isset( $this->post ) && ( $this->post instanceof WP_Post ) ) ? clone $this->post : null;
             if ( $this->authordata ) {
                 $authordata = clone $this->authordata;
             } else {
@@ -602,70 +616,3 @@ function wpv_dismiss_message_ajax() {
     die( 'ajax' );
 }
 
-// disable the admin messages for now. They are causing problems.
-//add_action('admin_head', 'wpv_show_admin_messages');
-
-/**
- * Shows stored admin messages. 
- */
-function wpv_show_admin_messages() {
-    $messages = get_option( 'wpv-messages', array() );
-    $dismissed_messages = get_option( 'wpv-dismissed-messages', array() );
-    foreach ( $messages as $message_id => $message ) {
-        if ( array_key_exists( $message_id, $dismissed_messages ) ) {
-            unset( $messages[$message_id] );
-            continue;
-        }
-        // update the nonce
-        $text = $message['message'];
-        $nonce = preg_match_all( "/_wpnonce=[^']+/", $text, $matches );
-
-        if ( $nonce ) {
-            $text = str_replace( $matches[0][0],
-                    '_wpnonce=' . wp_create_nonce( 'dismiss_message' ), $text );
-        }
-
-        wpv_admin_message( $message_id, $text, $message['class'] );
-        if ( $show_once ) {
-            unset( $messages[$message_id] );
-        }
-    }
-    update_option( 'wpv-messages', $messages );
-}
-
-/**
- * Stores admin messages.
- * 
- * @param type $message_id
- * @param type $message
- * @param type $show_once
- * @param type $class 
- */
-function wpv_admin_message_store( $message_id, $message, $show_once = true,
-        $class = 'updated' ) {
-    $messages = get_option( 'wpv-messages', array() );
-    $messages[strval( $message_id )] = array(
-        'message' => strval( $message ),
-        'class' => strval( $class ),
-        'show_once' => $show_once,
-    );
-    update_option( 'wpv-messages', $messages );
-}
-
-/**
- * Shows admin message.
- * 
- * @param type $message_id
- * @param type $message
- * @param type $class 
- */
-function wpv_admin_message( $message_id, $message, $class = 'updated' ) {
-    if ( apply_filters( 'wpv-show-message', true, $message_id ) ) {
-        add_action( 'admin_notices',
-                create_function( '$a=1, $message_id=\'' . strval( $message_id )
-                        . '\', $class=\'' . strval( $class )
-                        . '\', $message=\''
-                        . htmlentities( strval( $message ), ENT_QUOTES ) . '\'',
-                        '$screen = get_current_screen(); if (!$screen->is_network) echo "<div class=\"message $class\" id=\"wpv-message-$message_id\"><p>" . html_entity_decode($message, ENT_QUOTES) . "</p></div>";' ) );
-    }
-}
