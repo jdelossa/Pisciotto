@@ -3,7 +3,7 @@
 // MAP STYLES
 
 var myOptions = {
-    zoom: 10,
+    zoom: 11,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     scrollwheel: false,
     navigationControl: false,
@@ -17,36 +17,24 @@ var myOptions = {
 
 var officeOneLat = 40.701894,
     officeOneLng = -73.883348,
+    officeTwoLat = 40.7237881,
+    officeTwoLng = -73.6321029,
 
 	map = new GMaps({
-		div: '#glendale-map',
+		div: '#map',
 		lat: officeOneLat,
 		lng: officeOneLng,
 		center: new google.maps.LatLng(40.701894,-73.883348),
 		options: myOptions
 	});
 
-	map.addMarker ({
+  map.addMarker ({
   	lat: officeOneLat,
   	lng: officeOneLng,
   	title: 'Glendale Office',
   	infoWindow: {
   		content: '<p>Glendale Office</p>'
   	}
-  });
-
-// OFFICE TWO
-
-var officeTwoLat = 40.7237881,
-    officeTwoLng = -73.6321029,
-
-  map = new GMaps({
-    div: '#mineola-map',
-    lat: officeTwoLat,
-    lng: officeTwoLng,
-    refresh: true,
-    center: new google.maps.LatLng(40.7237881,-73.6321029),
-    options: myOptions
   });
 
   map.addMarker ({

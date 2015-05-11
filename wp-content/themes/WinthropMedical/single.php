@@ -80,7 +80,7 @@
 					<p><b>Affiliations: </b><?= types_render_field("doc-affiliations", array('raw' => 'true')); ?></p>
 				<?php } ?>
 
-				<div class="separator line-separator"></div>
+				<hr>
 
 				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?><?php the_content(); ?>
 				<?php endwhile; else: ?>

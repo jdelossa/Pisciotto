@@ -20,7 +20,7 @@
                 echo '<div class="row">';
             endif; ?>
 
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="doctor-card">
                     <a href="<?= get_page_link($page->ID); ?>"><?= get_the_post_thumbnail( $post->ID, 'full', array ('class' => 'img-thumbnail')); ?></a>
                     <a href="<?= get_page_link($page->ID); ?>" class="btn btn-primary"><?= $post->post_title; ?></a>

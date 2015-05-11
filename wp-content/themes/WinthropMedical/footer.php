@@ -1,17 +1,18 @@
-<footer class="footer"> 
-	<div class="container"> 
-	  <div class="row-fluid">
-	    <div class="col-sm-6">
-	      <div class="footer-logo">
-	        <a href="http://www.winthrop.org" target="_blank"><img src="<?php bloginfo('template_directory');?>/library/img/affiliate.png" alt="affliate"></a>
-	      </div>
-	    </div>
-	    <div class="col-sm-6">
-	      <p>©2015 - Winthrop University Hospital</p>
-	    </div>
-	  </div>
-	</div>
-</footer> <!-- end footer -->
+<footer>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="separator line-separator"></div>
+                    <p>Winthrop Medical Affiliates</p>
+                    <p>©2015 - Winthrop University Hospital</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>
 		
 				
 		<!--[if lt IE 7 ]>
