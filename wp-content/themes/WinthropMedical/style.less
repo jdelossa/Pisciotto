@@ -44,11 +44,6 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 @white: #ffffff;
 @silver: #eeeeee;
 @light-gray: #cccccc;
-@dark-gray: #575757;
-
-@dark-blue: #3b5e74;
-
-
 @light-blue: #14a1d1;
 @blue: #1a83a7;
 @yellow: #fab93d;
@@ -76,7 +71,7 @@ p,address,li {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
-  color: darken(@dark-blue, 10%);
+  color: darken(@blue, 10%);
 }
 section {
   padding: 10px;
@@ -127,7 +122,7 @@ ul{
   background-position: center;
 }
 .header {
-  border-bottom: 2px solid @dark-blue;
+  border-bottom: 2px solid @blue;
   margin: 10px 0px;
   width: 160px;
 }
@@ -136,7 +131,7 @@ ul{
 }
 /********************* Header Contact *********************/
 .header-contact {
-  background-color: @dark-blue;
+  background-color: @blue;
   height: 30px;
   position: fixed;
   top: 0;
@@ -193,6 +188,7 @@ ul{
   }
   .navbar {
     background-color: @blue;
+    border-radius: 4px;
     height: 50px;
     margin: 10px auto;
     text-align: center;
@@ -208,7 +204,7 @@ ul{
         border-right: solid 1px @white;
         color: @white;
         padding: 4px 25px;
-        text-shadow: @dark-gray 1px 0 1px;
+        text-shadow: @blue 1px 0 1px;
           &:active, &:focus, &:hover {
             background-color: transparent !important;
           }
@@ -221,19 +217,19 @@ ul{
 }
 /********************* Jumbotron *********************/
 .jumbotron {
-  height:600px;
-  margin-bottom: 0;
-//  background-color: darken(@silver, 10%);
-  border-radius: 0 !important;
   background: url(library/img/hero.jpg);
+  //background-color: darken(@silver, 10%);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border-radius: 0 !important;
+  height:600px;
+  margin-bottom: 0;
 }
 
 /********************* Home *********************/
 #home {
-  background-color: rgba(0,0,0,0.5) !important;
+  background-color: rgba(255,255,255,0.5) !important;
   border-top: solid 5px @yellow;
   border-left: none;
   border-right: none;
@@ -252,7 +248,7 @@ ul{
         border-right: solid 1px rgba(255,255,255,0.5);
       }
       .fa {
-        color: @white;
+        color: @blue;
         font-size: 24px;
         padding-right: 10px;
       }
@@ -261,11 +257,12 @@ ul{
       }
 
       a {
+        color: @blue !important;
         font-size: 20px;
-        padding: 20px 100px;
+        padding: 20px 70px;
 
         &:hover, &:active, &:focus {
-          color: @yellow !important;
+          color: darken(@blue, 10%) !important;
           text-decoration: none;
           transition: 100ms;
         }
@@ -280,15 +277,12 @@ ul{
 /********************* About *********************/
 #about {
   position: relative;
-    bottom: 90px;
+    bottom: 91px;
 }
 /********************* Physicians *********************/
 #physicians {
   position: relative;
   bottom: 45px;
-}
-.single-header {
-  margin: 40px 0;
 }
 .doctor-card {
   margin: 20px auto;
@@ -310,7 +304,7 @@ ul{
     text-transform: uppercase;
     font-size: 12px;
     background-color: @silver;
-    color: @dark-blue;
+    color: @blue;
     padding: 2px 5px;
     width: 100%;
     display: inline-block;
@@ -318,9 +312,6 @@ ul{
   .img-container {
     text-align: center;
     max-width: 100%;
-  } 
-  .btn {
-    width: 70%;
   }
   h2 {
     text-align: center;
@@ -335,8 +326,8 @@ ul{
   text-align: center;
   .insurance {
     li {
-      border: solid 1px @light-blue;
-      color: darken(@blue, 10%);
+      border: solid 1px darken(@blue, 10%);
+      color: @light-blue;
       display: inline-block;
       font-size: 10px;
       padding: 10px;
@@ -438,7 +429,7 @@ ul{
   font-weight: 600;
   margin: 12px 0;
   letter-spacing: 0.5px;
-  color: rgba(0,0,0,0.8);
+  color: darken(@blue, 10%);
   text-align: center;
 }
 .footer-logo {
@@ -457,6 +448,13 @@ ul{
   -moz-transform: scale(0.7);
   -o-transform: scale(0.7);
 }
+@media (max-width: 1200px){
+  .navbar-fixed-top {
+    .navbar {
+      width: 65%;
+    }
+  }
+}
 @media (min-width: 992px){
   div.map2 {
     display: none;
@@ -470,17 +468,16 @@ ul{
   .border-left {
     border-left: none !important;
   }
-  .single {
-    .btn {
-      width: 50%;
-    }
-  }
   .doctor-card {
     .btn {
-      width: 55%;
+      width: 70%;
     }
   }
-
+  .navbar-fixed-top {
+    .navbar {
+      width: 80%;
+    }
+  }
   .map {
     visibility: hidden;
     height: 0;
@@ -502,28 +499,27 @@ ul{
   }
 }
 @media(max-width: 767px){
-  body {
-    padding-top: 120px;
-    overflow-x: hidden; 
+  #home {
+    bottom: 101px;
+    .location {
+
+      li a {
+        font-size: 18px;
+        padding: 20px 30px;
+      }
+    }
+    .phone {
+      li a {
+        font-size: 14px;
+      }
+    }
+  }
+  #about {
+    bottom: 101px;
   }
   .single {
     .wrap {
       margin-bottom: 80px
-    }
-    .btn {
-      width: 40%;
-      font-size: 14px;
-    }
-  }
-  .wrap {
-    margin-bottom: 30px;
-  }
-  .nav-tabs.nav-justified > li {
-    float: left;
-    width: 50%;
-
-    a {
-      margin: 0;
     }
   }
   .header-contact {
@@ -539,34 +535,97 @@ ul{
       text-align: center;
       width: 100%;
       margin: 0;
+
+      a.title {
+        font-size: 24px;
+        top: 17px;
+      }
     }
     .navbar {
       text-align: center;
       width: 100%;
       float: none;
       padding-left: 0;
-      position: relative;
-      top: -15px;
-
-      a {
-        font-size: 14px;
-      }
     }
-  }
-  .nav-tabs {
-    a {
-      font-size: 18px !important;
+    .logo {
+      clear: both;
+      float: none !important;
     }
   }
   .footer {
     p {
-      width: 100%;
       text-align: center;
+      width: 100%;
     }
     .footer-logo {
       right: 0;
       width: 100%;
       text-align: center;
+    }
+  }
+}
+@media(max-width: 719px){
+  .navbar-fixed-top {
+    .logo {
+      left: 0px !important;
+    }
+  }
+}
+@media (max-width: 620px) {
+  .navbar-fixed-top {
+    .navbar {
+      li a {
+        font-size: 12px;
+        padding: 4px 20px;
+      }
+    }
+  }
+}
+@media (max-width: 480px) {
+  .navbar-fixed-top {
+    .navbar-header {
+      a.title {
+        font-size: 20px;
+      }
+    }
+    .navbar {
+      li a {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+    }
+  }
+  .jumbotron {
+    height: 450px;
+  }
+  #insurance{
+    .insurance {
+      li {
+        width: 43%;
+      }
+    }
+  }
+  #home {
+    display: none;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  p, a {
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px){
+  .navbar-fixed-top {
+    .navbar-header {
+      .logo {
+        width: 100%;
+      }
+    }
+    .navbar {
+      li a {
+        padding: 4px;
+      }
     }
   }
 }

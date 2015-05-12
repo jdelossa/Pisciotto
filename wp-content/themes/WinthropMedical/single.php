@@ -40,7 +40,7 @@
 			</div>
 		</div>
 
-		<div class="col-md-8">
+		<div class="col-md-8 profile">
 			<div class="content">
 				<p><b>Years of Experience: </b><?= types_render_field("doc-exp", array('raw' => 'true')) ;?></p>
 

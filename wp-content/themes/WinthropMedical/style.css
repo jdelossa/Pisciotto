@@ -91,7 +91,7 @@ li {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
-  color: #2a4352;
+  color: #13607b;
 }
 section {
   padding: 10px;
@@ -142,7 +142,7 @@ ul {
   background-position: center;
 }
 .header {
-  border-bottom: 2px solid #3b5e74;
+  border-bottom: 2px solid #1a83a7;
   margin: 10px 0px;
   width: 160px;
 }
@@ -151,7 +151,7 @@ ul {
 }
 /********************* Header Contact *********************/
 .header-contact {
-  background-color: #3b5e74;
+  background-color: #1a83a7;
   height: 30px;
   position: fixed;
   top: 0;
@@ -209,6 +209,7 @@ ul {
 }
 .navbar-fixed-top .navbar {
   background-color: #1a83a7;
+  border-radius: 4px;
   height: 50px;
   margin: 10px auto;
   text-align: center;
@@ -224,7 +225,7 @@ ul {
   border-right: solid 1px #ffffff;
   color: #ffffff;
   padding: 4px 25px;
-  text-shadow: #575757 1px 0 1px;
+  text-shadow: #1a83a7 1px 0 1px;
 }
 .navbar-fixed-top .navbar li a:active,
 .navbar-fixed-top .navbar li a:focus,
@@ -236,17 +237,17 @@ ul {
 }
 /********************* Jumbotron *********************/
 .jumbotron {
-  height: 600px;
-  margin-bottom: 0;
-  border-radius: 0 !important;
   background: url(library/img/hero.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  border-radius: 0 !important;
+  height: 600px;
+  margin-bottom: 0;
 }
 /********************* Home *********************/
 #home {
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
   border-top: solid 5px #fab93d;
   border-left: none;
   border-right: none;
@@ -264,7 +265,7 @@ ul {
   border-right: solid 1px rgba(255, 255, 255, 0.5);
 }
 #home .location li .fa {
-  color: #ffffff;
+  color: #1a83a7;
   font-size: 24px;
   padding-right: 10px;
 }
@@ -272,13 +273,14 @@ ul {
   font-size: 16px;
 }
 #home .location li a {
+  color: #1a83a7 !important;
   font-size: 20px;
-  padding: 20px 100px;
+  padding: 20px 70px;
 }
 #home .location li a:hover,
 #home .location li a:active,
 #home .location li a:focus {
-  color: #fab93d !important;
+  color: #13607b !important;
   text-decoration: none;
   transition: 100ms;
 }
@@ -289,15 +291,12 @@ ul {
 /********************* About *********************/
 #about {
   position: relative;
-  bottom: 90px;
+  bottom: 91px;
 }
 /********************* Physicians *********************/
 #physicians {
   position: relative;
   bottom: 45px;
-}
-.single-header {
-  margin: 40px 0;
 }
 .doctor-card {
   margin: 20px auto;
@@ -317,7 +316,7 @@ ul {
   text-transform: uppercase;
   font-size: 12px;
   background-color: #eeeeee;
-  color: #3b5e74;
+  color: #1a83a7;
   padding: 2px 5px;
   width: 100%;
   display: inline-block;
@@ -325,9 +324,6 @@ ul {
 .single .img-container {
   text-align: center;
   max-width: 100%;
-}
-.single .btn {
-  width: 70%;
 }
 .single h2 {
   text-align: center;
@@ -341,8 +337,8 @@ ul {
   text-align: center;
 }
 #insurance .insurance li {
-  border: solid 1px #14a1d1;
-  color: #13607b;
+  border: solid 1px #13607b;
+  color: #14a1d1;
   display: inline-block;
   font-size: 10px;
   padding: 10px;
@@ -445,7 +441,7 @@ ul {
   font-weight: 600;
   margin: 12px 0;
   letter-spacing: 0.5px;
-  color: rgba(0, 0, 0, 0.8);
+  color: #13607b;
   text-align: center;
 }
 .footer-logo {
@@ -464,6 +460,11 @@ ul {
   -moz-transform: scale(0.7);
   -o-transform: scale(0.7);
 }
+@media (max-width: 1200px) {
+  .navbar-fixed-top .navbar {
+    width: 65%;
+  }
+}
 @media (min-width: 992px) {
   div.map2 {
     display: none;
@@ -477,11 +478,11 @@ ul {
   .border-left {
     border-left: none !important;
   }
-  .single .btn {
-    width: 50%;
-  }
   .doctor-card .btn {
-    width: 55%;
+    width: 70%;
+  }
+  .navbar-fixed-top .navbar {
+    width: 80%;
   }
   .map {
     visibility: hidden;
@@ -504,26 +505,21 @@ ul {
   }
 }
 @media (max-width: 767px) {
-  body {
-    padding-top: 120px;
-    overflow-x: hidden;
+  #home {
+    bottom: 101px;
+  }
+  #home .location li a {
+    font-size: 18px;
+    padding: 20px 30px;
+  }
+  #home .phone li a {
+    font-size: 14px;
+  }
+  #about {
+    bottom: 101px;
   }
   .single .wrap {
     margin-bottom: 80px;
-  }
-  .single .btn {
-    width: 40%;
-    font-size: 14px;
-  }
-  .wrap {
-    margin-bottom: 30px;
-  }
-  .nav-tabs.nav-justified > li {
-    float: left;
-    width: 50%;
-  }
-  .nav-tabs.nav-justified > li a {
-    margin: 0;
   }
   .header-contact li,
   .header-contact a {
@@ -538,27 +534,71 @@ ul {
     width: 100%;
     margin: 0;
   }
+  .navbar-fixed-top .navbar-header a.title {
+    font-size: 24px;
+    top: 17px;
+  }
   .navbar-fixed-top .navbar {
     text-align: center;
     width: 100%;
     float: none;
     padding-left: 0;
-    position: relative;
-    top: -15px;
   }
-  .navbar-fixed-top .navbar a {
-    font-size: 14px;
-  }
-  .nav-tabs a {
-    font-size: 18px !important;
+  .navbar-fixed-top .logo {
+    clear: both;
+    float: none !important;
   }
   .footer p {
-    width: 100%;
     text-align: center;
+    width: 100%;
   }
   .footer .footer-logo {
     right: 0;
     width: 100%;
     text-align: center;
+  }
+}
+@media (max-width: 719px) {
+  .navbar-fixed-top .logo {
+    left: 0px !important;
+  }
+}
+@media (max-width: 620px) {
+  .navbar-fixed-top .navbar li a {
+    font-size: 12px;
+    padding: 4px 20px;
+  }
+}
+@media (max-width: 480px) {
+  .navbar-fixed-top .navbar-header a.title {
+    font-size: 20px;
+  }
+  .navbar-fixed-top .navbar li a {
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+  .jumbotron {
+    height: 450px;
+  }
+  #insurance .insurance li {
+    width: 43%;
+  }
+  #home {
+    display: none;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  p,
+  a {
+    font-size: 14px;
+  }
+}
+@media (max-width: 400px) {
+  .navbar-fixed-top .navbar-header .logo {
+    width: 100%;
+  }
+  .navbar-fixed-top .navbar li a {
+    padding: 4px;
   }
 }
