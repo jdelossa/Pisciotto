@@ -90,7 +90,7 @@ Template Name: Homepage
                     <a href="#" class="pan-to-marker" data-marker-index="0">View On Map</a> <!-- Show On Map -->
                 </div>
                 <div class="map2">
-                    <a href="https://www.google.com/maps/place/South+Shore+Cardiovascular+Med:+Kumar+Raman+MD/@40.676059,-73.416459,17z/data=!3m1!4b1!4m2!3m1!1s0x89e9d4ffb8fd8be3:0x41dc0c4fb92f058b" class="mobile">View On Map</a>
+                    <a href="https://www.google.com/maps/place/68-35+Myrtle+Ave,+Glendale,+NY+11385/@40.7019103,-73.8833704,17z/data=!3m1!4b1!4m2!3m1!1s0x89c25e7f524bf29f:0xbeeac5090228a099" class="mobile">View On Map</a>
                 </div>
 
             </div><!-- /.office-btn -->
@@ -117,7 +117,7 @@ Template Name: Homepage
                     <a href="#" class="pan-to-marker infoWindow" data-marker-index="1">View On Map</a> <!-- Show On Map -->
                 </div>
                 <div class="map2">
-                    <a href="https://www.google.com/maps/place/South+Shore+Cardiovascular+Med:+Ruisi+John+A+MD/@40.676059,-73.416459,17z/data=!3m1!4b1!4m2!3m1!1s0x89e9d4ffb8fd8be3:0xc313259a3a4e2e85" class="mobile">View On Map</a>
+                    <a href="https://www.google.com/maps/place/355+Mineola+Blvd,+Mineola,+NY+11501/@40.75051,-73.645779,17z/data=!3m1!4b1!4m2!3m1!1s0x89c287f96f621e5b:0x7b91aa51c23106ee" class="mobile">View On Map</a>
                 </div>
             </div><!-- /.office-btn -->
 

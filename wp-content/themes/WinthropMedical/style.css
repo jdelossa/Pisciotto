@@ -237,7 +237,7 @@ ul {
 }
 /********************* Jumbotron *********************/
 .jumbotron {
-  background: url(library/img/hero.jpg);
+  background-color: #d5d5d5;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -247,7 +247,7 @@ ul {
 }
 /********************* Home *********************/
 #home {
-  background-color: rgba(255, 255, 255, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
   border-top: solid 5px #fab93d;
   border-left: none;
   border-right: none;
@@ -262,7 +262,7 @@ ul {
   width: 50%;
 }
 #home .location li:first-child {
-  border-right: solid 1px rgba(255, 255, 255, 0.5);
+  border-right: solid 1px rgba(19, 96, 23, 0.5);
 }
 #home .location li .fa {
   color: #1a83a7;
@@ -338,7 +338,7 @@ ul {
 }
 #insurance .insurance li {
   border: solid 1px #13607b;
-  color: #14a1d1;
+  color: #13607b;
   display: inline-block;
   font-size: 10px;
   padding: 10px;
@@ -464,6 +464,10 @@ ul {
   .navbar-fixed-top .navbar {
     width: 65%;
   }
+  #insurance .insurance li {
+    font-size: 13px;
+    width: 47%;
+  }
 }
 @media (min-width: 992px) {
   div.map2 {
@@ -479,7 +483,7 @@ ul {
     border-left: none !important;
   }
   .doctor-card .btn {
-    width: 70%;
+    width: 55%;
   }
   .navbar-fixed-top .navbar {
     width: 80%;
@@ -517,6 +521,9 @@ ul {
   }
   #about {
     bottom: 101px;
+  }
+  #insurance .insurance li {
+    width: 60%;
   }
   .single .wrap {
     margin-bottom: 80px;
@@ -558,9 +565,12 @@ ul {
     text-align: center;
   }
 }
-@media (max-width: 719px) {
+@media (max-width: 676px) {
   .navbar-fixed-top .logo {
     left: 0px !important;
+  }
+  .margin-top {
+    margin-top: 132px;
   }
 }
 @media (max-width: 620px) {
@@ -573,15 +583,22 @@ ul {
   .navbar-fixed-top .navbar-header a.title {
     font-size: 20px;
   }
+  .navbar-fixed-top .navbar-header .logo {
+    transform: scale(0.5);
+    -ms-transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+    -moz-transform: scale(0.5);
+    -o-transform: scale(0.5);
+  }
   .navbar-fixed-top .navbar li a {
     font-size: 11px;
     padding: 4px 8px;
   }
+  .margin-top {
+    margin-top: 125px;
+  }
   .jumbotron {
     height: 450px;
-  }
-  #insurance .insurance li {
-    width: 43%;
   }
   #home {
     display: none;
@@ -599,6 +616,6 @@ ul {
     width: 100%;
   }
   .navbar-fixed-top .navbar li a {
-    padding: 4px;
+    font-size: 9px;
   }
 }

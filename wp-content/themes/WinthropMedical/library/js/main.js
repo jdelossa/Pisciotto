@@ -10,10 +10,10 @@ var myOptions = {
     mapTypeControl: false,
     scaleControl: false,
     draggable: false,
-    styles: [{"featureType":"administrative","elementType":"all","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f2e5d4"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{"featureType":"road","elementType":"all","stylers":[{"lightness":20}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"water","elementType":"all","stylers":[{"visibility":"on"},{"color":"#acbcc9"}]}]
+    styles: [{"featureType":"landscape.man_made","elementType":"geometry","stylers":[{"color":"#f7f1df"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#d0e3b4"}]},{"featureType":"landscape.natural.terrain","elementType":"geometry","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.medical","elementType":"geometry","stylers":[{"color":"#fbd3da"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#bde6ab"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#ffe15f"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#efd151"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"color":"black"}]},{"featureType":"transit.station.airport","elementType":"geometry.fill","stylers":[{"color":"#cfb2db"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#a2daf2"}]}]
   };
 
-// OFFICE ONE
+// OFFICE ONE && OFFICE TWO
 
 var officeOneLat = 40.701894,
     officeOneLng = -73.883348,
@@ -24,7 +24,7 @@ var officeOneLat = 40.701894,
 		div: '#map',
 		lat: officeOneLat,
 		lng: officeOneLng,
-		center: new google.maps.LatLng(40.701894,-73.883348),
+		center: new google.maps.LatLng(40.715,-73.75),
 		options: myOptions
 	});
 
@@ -45,3 +45,28 @@ var officeOneLat = 40.701894,
       content: '<p>Mineola Office</p>'
     }
   });
+
+
+// PAN TO MARKER
+
+$(document).on('click', 'pan-to-marker', function(e){
+    e.preventDefault();
+
+    var lat, lng;
+
+    var $index = $(this).data('marker-index');
+    var $lat = $(this).data('marker-lat');
+    var $lng = $(this).data('marker-lng');
+
+    if($index != undefined) {
+
+        var position = map.markers[$index].getPosition();
+        lat = position.lat();
+        lng = position.lng();
+    }
+    else {
+        lat = $lat;
+        lng = $lng;
+    }
+    map.setCenter(lat, lng);
+});
