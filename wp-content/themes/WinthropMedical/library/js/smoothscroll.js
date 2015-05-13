@@ -15,18 +15,11 @@ $(function() {
 });
 $(document).ready(function(){
   if($("body").hasClass("single")){
-    $("a.tab-contact").attr("href", "http://wuhwebsites.winthrop.org/advanced_ortho_wordpress");
+    $("a.home").attr("href", "http://localhost:8888/pisciotto_wordpress/#home");
+    $("a.about").attr("href", "http://localhost:8888/pisciotto_wordpress/#about");
+    $("a.physicians").attr("href", "http://localhost:8888/pisciotto_wordpress/#physicians");
+    $("a.insurance").attr("href", "http://localhost:8888/pisciotto_wordpress/#insurance");
+    $("a.offices").attr("href", "http://localhost:8888/pisciotto_wordpress/#offices");
   };
-});
-
-$(document).ready(function(){
-  $(".rockville-centre" ).click(function() {
-    $("a.tab-staff").attr("href", "#medical-staff-rc");
-    $("a.tab-contact").attr("href", "#contact-rc");
-  });
-  $( ".garden-city" ).click(function() {
-    $("a.tab-staff").attr("href", "#medical-staff-gc");
-    $("a.tab-contact").attr("href", "#contact-gc");
-  });
 });
 

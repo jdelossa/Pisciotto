@@ -50,6 +50,7 @@
 
             <div id="navbar">
                 <ul class="navbar nav navbar-left">
+                    <li><a href="#home" class="home">Home</a></li>
                     <li><a href="#about" class="about">About Us</a></li>
                     <li><a href="#physicians" class="physicians">Our Physicians</a></li>
                     <li><a href="#insurance" class="insurance">Accepted Insurance</a></li>
